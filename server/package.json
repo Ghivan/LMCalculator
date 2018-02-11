@@ -1,0 +1,32 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "server side",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start:test": "cross-env MONGO_CONNECTION=mongodb://localhost/test-db node index.js",
+    "test": "cross-env MONGO_CONNECTION=mongodb://localhost/test-db jest  --forceExit"
+  },
+  "author": "Stanislav aka Ghivan",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.1",
+    "mongoose": "^5.0.2",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.1.3",
+    "jest": "^22.1.4",
+    "selenium-webdriver": "^4.0.0-alpha.1",
+    "supertest": "^3.0.0"
+  },
+  "jest": {
+    "testRegex": "(/__tests__/.*\\.test)\\.(js)$"
+  }
+}
