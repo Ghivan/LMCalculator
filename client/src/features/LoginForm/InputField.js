@@ -3,16 +3,20 @@ import PropTypes from 'prop-types';
 
 const InputField = (
     {
-        name, error, handleInputFocus, handleInputChange, handleInputBlur
+        type='text', name, label, error, placeholder='Введите значение...',
+        value = '',
+        handleInputFocus, handleInputChange, handleInputBlur
     }) => (
     <div className="input-group">
         <div className="input-group-prepend">
-            <span className="input-group-text" id={`${name}prepend`}>Логин:</span>
+            <span className="input-group-text" id={`${name}prepend`}>{label}</span>
         </div>
         <input className={`form-control ${error ? 'is-invalid' : ''}`}
+               type={type}
                id={name}
                name={name}
-               placeholder="Ваш логин..." required
+               value={value}
+               placeholder={placeholder} required
                onFocus={handleInputFocus}
                onChange={handleInputChange}
                onBlur={handleInputBlur}
@@ -25,6 +29,10 @@ const InputField = (
 
 InputField.propTypes = {
     name: PropTypes.string,
+    type: PropTypes.string,
+    value: PropTypes.string,
+    placeholder: PropTypes.string,
+    label: PropTypes.string,
     error: PropTypes.string,
     handleInputBlur: PropTypes.func,
     handleInputChange: PropTypes.func,

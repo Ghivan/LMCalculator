@@ -1,13 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Validator from './utils/Validator'
 import InputField from './InputField'
-
-const InputNames = {
-    NICKNAME: 'nickname',
-    PASSWORD: 'password'
-};
+import {InputNames} from './constants'
+import validate from './utils/functions'
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -43,7 +39,7 @@ class LoginForm extends React.Component {
     handleInputBlur = e => {
         const value = e.target.value.trim();
         const inputName = e.target.name;
-        Validator.validateNickname(value, (err) => {
+        validate(inputName, value, (err) => {
             if (err) {
                 this.setState((prevState) => {
                     return {
@@ -76,13 +72,20 @@ class LoginForm extends React.Component {
                 <div className="col-6">
                     <form className="needs-validation">
                         <InputField name={InputNames.NICKNAME}
+                                    value={this.state[InputNames.NICKNAME]}
                                     error={this.state.errors[InputNames.NICKNAME]}
+                                    label="Логин:"
+                                    placeholder="Ваш логин..."
                                     handleInputBlur={this.handleInputBlur}
                                     handleInputChange={this.handleInputChange}
                                     handleInputFocus={this.handleInputFocus}
                         />
                         <InputField name={InputNames.PASSWORD}
+                                    value={this.state[InputNames.PASSWORD]}
                                     error={this.state.errors[InputNames.PASSWORD]}
+                                    label="Пароль:"
+                                    placeholder="Ваш пароль..."
+                                    type="password"
                                     handleInputBlur={this.handleInputBlur}
                                     handleInputChange={this.handleInputChange}
                                     handleInputFocus={this.handleInputFocus}
