@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import LoginForm from './features/LoginForm/LoginForm';
 class App extends Component {
     componentDidMount() {
 
@@ -7,7 +7,7 @@ class App extends Component {
 
     render() {
         return (
-            <h1>Welcome</h1>
+            <LoginForm login={()=>{}}/>
         );
     }
 }
