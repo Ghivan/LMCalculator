@@ -32,7 +32,7 @@ module.exports = new Strategy({
                     };
 
                     jwt.sign(data, config.jwtSecret, (err, token) => {
-                        if (!err){
+                        if (!err) {
                             done(null, token);
                         } else {
                             done(err)

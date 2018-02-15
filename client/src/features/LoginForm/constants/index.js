@@ -3,5 +3,5 @@ export const InputNames = {
     PASSWORD: 'password'
 };
 
-export const MinNicknameLength = 8;
+export const MinNicknameLength = 3;
 export const MinPasswordLength = 6;

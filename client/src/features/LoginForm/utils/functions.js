@@ -8,10 +8,9 @@ const Validators = {
         return message;
     },
 
-    [InputNames.PASSWORD]: nickname => {
-        let message = nickname.length >= MinNicknameLength ? '' : `Длина пароля должна быть меньше ${MinPasswordLength}`;
-        if (nickname.length === 0) message = `Поле не должно быть пустым`;
-
+    [InputNames.PASSWORD]: password => {
+        let message = password.length >= MinPasswordLength ? '' : `Длина пароля должна быть меньше ${MinPasswordLength}`;
+        if (password.length === 0) message = `Поле не должно быть пустым`;
         return message;
     }
 };
