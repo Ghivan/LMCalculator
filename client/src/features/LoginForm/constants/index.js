@@ -4,4 +4,4 @@ export const InputNames = {
 };
 
 export const MinNicknameLength = 3;
-export const MinPasswordLength = 6;
+export const MinPasswordLength = 4;

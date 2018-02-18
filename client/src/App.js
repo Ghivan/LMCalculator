@@ -1,31 +1,48 @@
 import React, {Component} from 'react';
-import LoginForm from './features/LoginForm/LoginForm';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect
+} from 'react-router-dom';
+
+import LoginForm from './features/LoginForm/ConnectedLoginForm';
+import PlayerProfile from './features/PlayerProfile/ConnectedPlayerProfile';
+
+
 
 class App extends Component {
-    clearError = () => {
-        setTimeout(() => this.setState({globalError: ''}), 0)
-    };
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            globalError: ''
-        };
-    }
-
     render() {
-        return (
-            <div onClick={() => {
-                this.setState({globalError: 'error'});
-            }}>
-                <LoginForm login={(params) => {
-                    console.log(params)
-                }}
-                           globalError={this.state.globalError}
-                           clearError={this.clearError}
-                />
-            </div>
-        );
+        const {id, isAdmin} = this.props.player;
+        if (!id) {
+            return (
+                <Router>
+                    <div>
+                        <Switch>
+                            <Route exact path="/login" component={LoginForm}/>
+                            <Route path="/" render={() => <Redirect to={'/login'}/>}/>
+                        </Switch>
+                    </div>
+                </Router>
+            )
+        } else {
+            return (
+                <Router>
+                    <div>
+                        <Switch>
+                            <Route exact path="/profile"
+                                   component={PlayerProfile}
+                            />
+                            <Route path="/"
+                                   render={
+                                       () => <Redirect to={'/profile'}/>
+                                   }
+                            />
+                        </Switch>
+                    </div>
+                </Router>
+            );
+        }
     }
 }
 

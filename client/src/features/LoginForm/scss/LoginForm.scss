@@ -1,0 +1,23 @@
+@import '../../../styles/sass/colors';
+@import '../../../styles/sass/button';
+
+.login-form-container {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-gap: 10px;
+  grid-template: "a a a" "b c d" "e e e";
+  background-color: $background-color-1;
+
+  form {
+    grid-area: c;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    >*{
+      margin: 10px;
+    }
+  }
+
+  padding: 10px;
+}

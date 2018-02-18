@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './LoginForm.css';
-import Modal from '../Modal/Modal';
-import FloatError from '../Errors/FloatError/FloatError';
-import InputField from './InputField';
+import './css/LoginForm.css';
+
 import {InputNames} from './constants';
 import validate from './utils/functions';
+
+import FloatError from "../Errors/FloatError/FloatError";
+import InputField from './InputField';
 
 class LoginForm extends React.Component {
     state = {
@@ -66,9 +67,11 @@ class LoginForm extends React.Component {
     };
 
     render() {
+        const {error} = this.props;
         return (
-            <div className="row justify-content-center login-form-container">
-                <div className="col-6">
+            <div>
+                {error ? <FloatError message={error}/> : null}
+                <div className="login-form-container">
                     <form className="needs-validation">
                         <InputField name={InputNames.NICKNAME}
                                     value={this.state[InputNames.NICKNAME]}
@@ -89,30 +92,22 @@ class LoginForm extends React.Component {
                                     handleInputChange={this.handleInputChange}
                                     handleInputFocus={this.handleInputFocus}
                         />
-                        <button
-                            className={`btn btn-success ${(this.state[InputNames.PASSWORD] === '' || this.state[InputNames.NICKNAME] === '') ? 'disabled' : ''}`}
-                            onClick={e => {
-                                e.preventDefault();
-                                if (this.state[InputNames.NICKNAME] !== '' &&
-                                    this.state[InputNames.PASSWORD] !== '' &&
-                                    !this.state.errors[InputNames.NICKNAME] &&
-                                    !this.state.errors[InputNames.PASSWORD]) {
-                                    this.props.login({
-                                        nickname: this.state[InputNames.NICKNAME],
-                                        password: this.state[InputNames.PASSWORD]
-                                    })
-                                }
-                            }}
+                        <a href="#"
+                           className={`button crisp ${(this.state[InputNames.PASSWORD] === '' || this.state[InputNames.NICKNAME] === '') ? 'disabled' : ''}`}
+                           onClick={e => {
+                               e.preventDefault();
+                               if (this.state[InputNames.NICKNAME] !== '' &&
+                                   this.state[InputNames.PASSWORD] !== '' &&
+                                   !this.state.errors[InputNames.NICKNAME] &&
+                                   !this.state.errors[InputNames.PASSWORD]) {
+                                   this.props.login({
+                                       nickname: this.state[InputNames.NICKNAME],
+                                       password: this.state[InputNames.PASSWORD]
+                                   })
+                               }
+                           }}
                         >Войти
-                        </button>
-                        {this.props.globalError !== ''
-                            ? <Modal>
-                                <FloatError message={this.props.globalError}
-                                            clearError={this.props.clearError}
-                                />
-                            </Modal>
-                            : null
-                        }
+                        </a>
                     </form>
                 </div>
             </div>
@@ -122,8 +117,7 @@ class LoginForm extends React.Component {
 
 LoginForm.propTypes = {
     login: PropTypes.func,
-    clearError: PropTypes.func,
-    globalError: PropTypes.string
+    clearError: PropTypes.func
 };
 
 export default LoginForm;

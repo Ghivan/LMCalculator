@@ -34,7 +34,7 @@ module.exports = () => {
         }
 
         PlayerModel.findById(id)
-            .then(player => res.send(transform(player, ['password', 'role'])), next);
+            .then(player => res.send(transform(player, ['password', 'role', 'id'])), next);
 
     });
 
