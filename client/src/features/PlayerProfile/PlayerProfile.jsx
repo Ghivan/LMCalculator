@@ -4,22 +4,10 @@ import isEmpty from 'lodash/isEmpty';
 
 class PlayerProfile extends React.Component {
 
-    componentDidMount(){
-        const {id} = this.props.player;
-        if (id){
-            this.props.fetchDetails(id);
-        }
-    }
-
-    componentWillReceiveProps({player}){
-        if (this.props.player.id !== player.id){
-            this.props.fetchDetails(player.id);
-        }
-    }
-
     render() {
         const {details} = this.props.player;
         const {logout} = this.props;
+
         if (isEmpty(details)) return <span className="font-weight-bold font-italic">Загрузка...</span>;
         return (
             <div className="card m-1">

@@ -8,10 +8,23 @@ import {
 
 import LoginForm from './features/LoginForm/ConnectedLoginForm';
 import PlayerProfile from './features/PlayerProfile/ConnectedPlayerProfile';
+import GeneralCalculator from './features/Calculator/GeneralCalculator/GeneralCalculator';
 
 
 
 class App extends Component {
+    componentDidMount(){
+        const {id} = this.props.player;
+        if (id){
+            this.props.fetchDetails(id);
+        }
+    }
+
+    componentWillReceiveProps({player}){
+        if (player.id !== '' && this.props.player.id !== player.id){
+            this.props.fetchDetails(player.id);
+        }
+    }
     render() {
         const {id, isAdmin} = this.props.player;
         if (!id) {
@@ -20,6 +33,7 @@ class App extends Component {
                     <div>
                         <Switch>
                             <Route exact path="/login" component={LoginForm}/>
+                            <Route exact path="/calculator" component={GeneralCalculator}/>
                             <Route path="/" render={() => <Redirect to={'/login'}/>}/>
                         </Switch>
                     </div>

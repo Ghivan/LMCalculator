@@ -71,14 +71,16 @@
   display: grid;
   grid-gap: 10px;
   grid-template: "a a a" "b c d" "e e e";
-  background-color: #4B948A;
   padding: 10px; }
   .login-form-container form {
     grid-area: c;
     display: flex;
     align-items: center;
     flex-direction: column; }
-    .login-form-container form > * {
-      margin: 10px; }
+    .login-form-container form > .input-group {
+      padding-bottom: 25px; }
+    .login-form-container form .invalid-feedback {
+      position: absolute;
+      top: 35px; }
 
 /*# sourceMappingURL=LoginForm.css.map */

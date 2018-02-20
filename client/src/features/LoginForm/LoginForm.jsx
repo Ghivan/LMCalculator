@@ -7,7 +7,7 @@ import {InputNames} from './constants';
 import validate from './utils/functions';
 
 import FloatError from "../Errors/FloatError/FloatError";
-import InputField from './InputField';
+import InputField from '../Global/InputField/InputField';
 
 class LoginForm extends React.Component {
     state = {
