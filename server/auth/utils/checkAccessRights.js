@@ -9,13 +9,13 @@ const AccessPermission = {
 module.exports = {
     AccessPermission,
     checkPlayerAccessRights: (AccessRights, req) => {
-        const requestingPlayer = req.body.loggedInPlayer;
+        const {loggedInPlayer} = req.body;
         switch (AccessRights) {
             case (AccessPermission.ADMIN):
-                return (requestingPlayer.role === ROLES.ADMIN || requestingPlayer.role === ROLES.OWNER);
+                return (loggedInPlayer.role === ROLES.ADMIN || loggedInPlayer.role === ROLES.OWNER);
             case (AccessPermission.REQUESTING_PLAYER):
                 const requestedPlayerId = req.params.id;
-                return (requestingPlayer.id === requestedPlayerId || requestingPlayer.role === ROLES.ADMIN || requestingPlayer.role === ROLES.OWNER);
+                return (loggedInPlayer.id === requestedPlayerId || loggedInPlayer.role === ROLES.ADMIN || loggedInPlayer.role === ROLES.OWNER);
             case (AccessPermission.ALL):
                 return true;
             default:
