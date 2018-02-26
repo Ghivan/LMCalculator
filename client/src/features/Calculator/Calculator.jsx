@@ -1,17 +1,19 @@
 import React from 'react';
 import TimeDisplay from "./Components/TimeDisplay";
-import {countTimeWithHelp, countTimeWithSpeedBonus} from "./helpers/functions";
+import {countTimeWithHelp, countTimeWithSpeedBonus, getFormattedTime} from "./helpers/functions";
 import InputField from "./Components/InputField";
+import TimeForm from "./Components/TimeForm";
 
 const FIELD_NAMES = {
-    HELP_QUANTITY: 'helpQuantity'
+    HELP_QUANTITY: 'helpQuantity',
+    SPEED_BONUS: 'speedBonus'
 };
 
 class Calculator extends React.Component {
     state = {
-        seconds: 5643333,
-        speedBonus: 0,
-        [FIELD_NAMES.HELP_QUANTITY]: 12,
+        seconds: 24 * 60 * 60 + 17 * 60 * 60 + 27 * 60 + 44,
+        [FIELD_NAMES.SPEED_BONUS]: 0,
+        [FIELD_NAMES.HELP_QUANTITY]: 0,
         errors: {}
     };
 
@@ -28,14 +30,14 @@ class Calculator extends React.Component {
         this.setState({
             errors: {
                 ...this.state.errors,
-                [field]:''
+                [field]: ''
             }
         })
     };
 
     onInputBlur = element => {
         const fieldName = element.name;
-        if (this.state.errors[fieldName]){
+        if (this.state.errors[fieldName]) {
             element.select();
         }
     };
@@ -48,13 +50,17 @@ class Calculator extends React.Component {
             case FIELD_NAMES.HELP_QUANTITY:
                 this.setHelpQuantityField(value);
                 break;
+
+            case FIELD_NAMES.SPEED_BONUS:
+                this.setSpeedBonusField(value);
+                break;
         }
     };
 
-    setHelpQuantityField = valueToValidate => {
-        const value = Number(valueToValidate.replace(/,/g, '\.'));
+    setHelpQuantityField = valueToSet => {
+        const value = Number(valueToSet.replace(/,/g, '\.'));
         if (value < 0 || value > 30 || isNaN(value) || (value % 1 !== 0)) {
-            this.setError(FIELD_NAMES.HELP_QUANTITY, 'Количество помощи должно быть целым числом от 0 до 30');
+            this.setError(FIELD_NAMES.HELP_QUANTITY, 'Целое число от 0 до 30');
             this.setState({
                 [FIELD_NAMES.HELP_QUANTITY]: 0
             });
@@ -64,21 +70,53 @@ class Calculator extends React.Component {
                 [FIELD_NAMES.HELP_QUANTITY]: value
             });
         }
+    };
 
+    setSpeedBonusField = valueToSet => {
+        const value = Number(valueToSet.replace(/,/g, '\.'));
+        if (value < 0 || isNaN(value)) {
+            this.setError(FIELD_NAMES.SPEED_BONUS, 'Число больше 0');
+            this.setState({
+                [FIELD_NAMES.SPEED_BONUS]: 0
+            });
+        } else {
+            this.clearError(FIELD_NAMES.SPEED_BONUS);
+            this.setState({
+                [FIELD_NAMES.SPEED_BONUS]: value
+            });
+        }
+    };
+
+    setSeconds = seconds => {
+        this.setState({
+            seconds
+        })
     };
 
     render() {
-        const timeWithSpeedBonus = countTimeWithSpeedBonus(this.state.seconds, this.state.speedBonus);
+        const timeWithSpeedBonus = countTimeWithSpeedBonus(this.state.seconds, this.state[FIELD_NAMES.SPEED_BONUS]);
         const timeWithHelp = countTimeWithHelp(timeWithSpeedBonus, this.state[FIELD_NAMES.HELP_QUANTITY]);
         return (
             <div className='container'>
                 <InputField name={FIELD_NAMES.HELP_QUANTITY}
-                           defaultValue={this.state[FIELD_NAMES.HELP_QUANTITY]}
-                           error={this.state.errors[FIELD_NAMES.HELP_QUANTITY]}
-                           onChange={this.onInputChange}
+                            defaultValue={this.state[FIELD_NAMES.HELP_QUANTITY]}
+                            error={this.state.errors[FIELD_NAMES.HELP_QUANTITY]}
+                            onChange={this.onInputChange}
                             onBlur={this.onInputBlur}
-                           label="Количество помощи:"
-               />
+                            label="Количество помощи:"
+                />
+
+                <InputField name={FIELD_NAMES.SPEED_BONUS}
+                            defaultValue={this.state[FIELD_NAMES.SPEED_BONUS]}
+                            error={this.state.errors[FIELD_NAMES.SPEED_BONUS]}
+                            onChange={this.onInputChange}
+                            onBlur={this.onInputBlur}
+                            label="Бонус скорости:"
+                />
+
+                <TimeForm seconds={this.state.seconds}
+                          onTimeChange={this.setSeconds}
+                />
 
                 <TimeDisplay title='Исходное время:'
                              seconds={this.state.seconds}

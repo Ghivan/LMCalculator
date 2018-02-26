@@ -23,9 +23,7 @@ class InputField extends React.Component{
     };
 
     onInputFocus = e => {
-        this.setState({
-            inputValue: ''
-        });
+        e.target.select()
 
         if (this.props.onFocus) this.props.onFocus(e.target);
     };
