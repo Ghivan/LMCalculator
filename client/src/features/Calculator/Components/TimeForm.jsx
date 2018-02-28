@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InputField from './InputField';
+import TimeInputField from './TimeInputField';
 
 import {getFormattedTime} from "../helpers/functions";
 
@@ -86,47 +86,90 @@ class TimeForm extends React.Component {
         }
     };
 
-    onInputFocus = element => {
-        const fieldName = element.name;
-        const fieldValue = element.value;
-        this.setTime(fieldName, fieldValue);
-    };
-
     render() {
         return (
             <div>
-                <InputField name={FIELD_NAMES.DAYS}
-                            label="Дни:"
-                            defaultValue={this.state[FIELD_NAMES.DAYS]}
-                            error={this.state.errors[FIELD_NAMES.DAYS]}
-                            onChange={this.onInputChange}
-                            onBlur={this.onInputBlur}
-                            onFocus={this.onInputFocus}
-                />
-                <InputField name={FIELD_NAMES.HOURS}
-                            defaultValue={this.state[FIELD_NAMES.HOURS]}
-                            error={this.state.errors[FIELD_NAMES.HOURS]}
-                            label="Часы:"
-                            onChange={this.onInputChange}
-                            onBlur={this.onInputBlur}
-                            onFocus={this.onInputFocus}
-                />
-                <InputField name={FIELD_NAMES.MINUTES}
-                            defaultValue={this.state[FIELD_NAMES.MINUTES]}
-                            error={this.state.errors[FIELD_NAMES.MINUTES]}
-                            label="Минуты"
-                            onChange={this.onInputChange}
-                            onBlur={this.onInputBlur}
-                            onFocus={this.onInputFocus}
-                />
-                <InputField name={FIELD_NAMES.SECONDS}
-                            defaultValue={this.state[FIELD_NAMES.SECONDS]}
-                            error={this.state.errors[FIELD_NAMES.SECONDS]}
-                            label="Секунды"
-                            onChange={this.onInputChange}
-                            onBlur={this.onInputBlur}
-                            onFocus={this.onInputFocus}
-                />
+                <div className="columns is-multiline">
+                    <div className="column is-one-quarter-desktop is-half-tablet">
+                        <div className="card">
+                            <header className="card-header">
+                                <p className="card-header-title is-centered">
+                                    Дни
+                                </p>
+                            </header>
+                            <div className="card-content">
+                                <div className="content has-text-centered">
+                                    <TimeInputField name={FIELD_NAMES.DAYS}
+                                                    defaultValue={this.state[FIELD_NAMES.DAYS]}
+                                                    error={this.state.errors[FIELD_NAMES.DAYS]}
+                                                    onChange={this.onInputChange}
+                                                    onBlur={this.onInputBlur}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="column is-one-quarter-desktop is-half-tablet">
+                        <div className="card">
+                            <header className="card-header">
+                                <p className="card-header-title is-centered">
+                                    Часы
+                                </p>
+                            </header>
+                            <div className="card-content ">
+                                <div className="content  has-text-centered">
+                                    <TimeInputField name={FIELD_NAMES.HOURS}
+                                                    defaultValue={this.state[FIELD_NAMES.HOURS]}
+                                                    error={this.state.errors[FIELD_NAMES.HOURS]}
+                                                    onChange={this.onInputChange}
+                                                    onBlur={this.onInputBlur}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="column is-one-quarter-desktop is-half-tablet">
+                        <div className="card">
+                            <header className="card-header">
+                                <p className="card-header-title is-centered">
+                                    Минуты
+                                </p>
+                            </header>
+                            <div className="card-content ">
+                                <div className="content  has-text-centered">
+                                    <TimeInputField name={FIELD_NAMES.MINUTES}
+                                                    defaultValue={this.state[FIELD_NAMES.MINUTES]}
+                                                    error={this.state.errors[FIELD_NAMES.MINUTES]}
+                                                    onChange={this.onInputChange}
+                                                    onBlur={this.onInputBlur}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="column is-one-quarter-desktop is-half-tablet">
+                        <div className="card">
+                            <header className="card-header">
+                                <p className="card-header-title is-centered">
+                                    Секунды
+                                </p>
+                            </header>
+                            <div className="card-content ">
+                                <div className="content  has-text-centered">
+                                    <TimeInputField name={FIELD_NAMES.SECONDS}
+                                                    defaultValue={this.state[FIELD_NAMES.SECONDS]}
+                                                    error={this.state.errors[FIELD_NAMES.SECONDS]}
+                                                    onChange={this.onInputChange}
+                                                    onBlur={this.onInputBlur}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }

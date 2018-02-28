@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './css/FloatError.css'
-
 const TIME_TO_SHOW = 2000;
 
 class FloatError extends React.Component {
@@ -31,13 +29,17 @@ class FloatError extends React.Component {
     render() {
         const {message} = this.props;
         return (
-            <div className="float-error-container"
-                 onClick={this.clearError}
-            >
-                <div className="float-error alert alert-danger alert-dismissible fade show"
-                     role="alert"
-                >
-                    <strong>Ошибка!</strong> {message}
+            <div className="modal is-active">
+                <div onClick={this.clearError} className="modal-background"/>
+                <div className="modal-content">
+                    <article className="message is-danger">
+                        <div className="message-header">
+                            <p>Ошибка!</p>
+                        </div>
+                        <div className="message-body">
+                            {message}
+                        </div>
+                    </article>
                 </div>
             </div>
         )

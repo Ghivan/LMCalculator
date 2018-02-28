@@ -1,7 +1,7 @@
 import React from 'react';
 import TimeDisplay from "./Components/TimeDisplay";
-import {countTimeWithHelp, countTimeWithSpeedBonus, getFormattedTime} from "./helpers/functions";
-import InputField from "./Components/InputField";
+import {countTimeWithHelp, countTimeWithSpeedBonus} from "./helpers/functions";
+import TimeInputField from "./Components/TimeInputField";
 import TimeForm from "./Components/TimeForm";
 
 const FIELD_NAMES = {
@@ -11,9 +11,9 @@ const FIELD_NAMES = {
 
 class Calculator extends React.Component {
     state = {
-        seconds: 24 * 60 * 60 + 17 * 60 * 60 + 27 * 60 + 44,
+        seconds: 0,
         [FIELD_NAMES.SPEED_BONUS]: 0,
-        [FIELD_NAMES.HELP_QUANTITY]: 0,
+        [FIELD_NAMES.HELP_QUANTITY]: 30,
         errors: {}
     };
 
@@ -54,11 +54,14 @@ class Calculator extends React.Component {
             case FIELD_NAMES.SPEED_BONUS:
                 this.setSpeedBonusField(value);
                 break;
+
+            default:
+                return null;
         }
     };
 
     setHelpQuantityField = valueToSet => {
-        const value = Number(valueToSet.replace(/,/g, '\.'));
+        const value = Number(valueToSet.replace(/,/g, '.'));
         if (value < 0 || value > 30 || isNaN(value) || (value % 1 !== 0)) {
             this.setError(FIELD_NAMES.HELP_QUANTITY, 'Целое число от 0 до 30');
             this.setState({
@@ -73,7 +76,7 @@ class Calculator extends React.Component {
     };
 
     setSpeedBonusField = valueToSet => {
-        const value = Number(valueToSet.replace(/,/g, '\.'));
+        const value = Number(valueToSet.replace(/,/g, '.'));
         if (value < 0 || isNaN(value)) {
             this.setError(FIELD_NAMES.SPEED_BONUS, 'Число больше 0');
             this.setState({
@@ -97,35 +100,74 @@ class Calculator extends React.Component {
         const timeWithSpeedBonus = countTimeWithSpeedBonus(this.state.seconds, this.state[FIELD_NAMES.SPEED_BONUS]);
         const timeWithHelp = countTimeWithHelp(timeWithSpeedBonus, this.state[FIELD_NAMES.HELP_QUANTITY]);
         return (
-            <div className='container'>
-                <InputField name={FIELD_NAMES.HELP_QUANTITY}
-                            defaultValue={this.state[FIELD_NAMES.HELP_QUANTITY]}
-                            error={this.state.errors[FIELD_NAMES.HELP_QUANTITY]}
-                            onChange={this.onInputChange}
-                            onBlur={this.onInputBlur}
-                            label="Количество помощи:"
-                />
+            <div className="columns">
+                <div className="column">
+                    <h2 className="is-size-2 has-text-centered">Исходное время</h2>
+                    <TimeForm seconds={this.state.seconds}
+                              onTimeChange={this.setSeconds}
+                    />
+                    <div className="columns is-centered">
+                        <div className="column is-half">
+                            <div className="card">
+                                <header className="card-header">
+                                    <p className="card-header-title is-centered">
+                                        Бонус скорости
+                                    </p>
+                                </header>
+                                <div className="card-content ">
+                                    <div className="content  has-text-centered">
+                                        <TimeInputField name={FIELD_NAMES.SPEED_BONUS}
+                                                        defaultValue={this.state[FIELD_NAMES.SPEED_BONUS]}
+                                                        error={this.state.errors[FIELD_NAMES.SPEED_BONUS]}
+                                                        onChange={this.onInputChange}
+                                                        onBlur={this.onInputBlur}
+                                                        icon="fa-fast-forward"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                <InputField name={FIELD_NAMES.SPEED_BONUS}
-                            defaultValue={this.state[FIELD_NAMES.SPEED_BONUS]}
-                            error={this.state.errors[FIELD_NAMES.SPEED_BONUS]}
-                            onChange={this.onInputChange}
-                            onBlur={this.onInputBlur}
-                            label="Бонус скорости:"
-                />
+                        <div className="column is-half">
+                            <div className="card">
+                                <header className="card-header">
+                                    <p className="card-header-title is-centered">
+                                        Количество помощи
+                                    </p>
+                                </header>
+                                <div className="card-content">
+                                    <div className="content  has-text-centered">
+                                        <TimeInputField name={FIELD_NAMES.HELP_QUANTITY}
+                                                        defaultValue={this.state[FIELD_NAMES.HELP_QUANTITY]}
+                                                        error={this.state.errors[FIELD_NAMES.HELP_QUANTITY]}
+                                                        onChange={this.onInputChange}
+                                                        onBlur={this.onInputBlur}
+                                                        icon="fa-handshake"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="column">
+                    <h2 className="is-size-2 has-text-centered">Расчетное время</h2>
 
-                <TimeForm seconds={this.state.seconds}
-                          onTimeChange={this.setSeconds}
-                />
-
-                <TimeDisplay title='Исходное время:'
-                             seconds={this.state.seconds}
-                />
-                <TimeDisplay title='Фактическое время:'
-                             seconds={!this.state.errorMessage ? timeWithSpeedBonus : null}
-                />
-                <TimeDisplay title='Время после помощи:'
-                             seconds={!this.state.errorMessage ? timeWithHelp : null}/>
+                    <div className="columns is-multiline">
+                        <div className="column is-half-desktop is-12-tablet">
+                            <TimeDisplay title='Фактическое время:'
+                                         seconds={!this.state.errorMessage ? timeWithSpeedBonus : null}
+                                         color="info"
+                            />
+                        </div>
+                        <div className="column is-half-desktop is-12-tablet">
+                            <TimeDisplay title='Время после помощи:'
+                                         seconds={!this.state.errorMessage ? timeWithHelp : null}
+                                         color="success"
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

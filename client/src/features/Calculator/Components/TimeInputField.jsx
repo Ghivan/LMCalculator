@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class InputField extends React.Component{
+class TimeInputField extends React.Component {
     state = {
-      inputValue: this.props.defaultValue
+        inputValue: this.props.defaultValue
     };
 
     onInputChange = e => {
@@ -23,41 +23,48 @@ class InputField extends React.Component{
     };
 
     onInputFocus = e => {
-        e.target.select()
+        e.target.select();
 
         if (this.props.onFocus) this.props.onFocus(e.target);
     };
 
-    render(){
+    render() {
         const {
             type = 'text',
             name,
             error,
-            label = ''
+            label = '',
+            icon='fa-clock'
         } = this.props;
 
         return (
-                <div className="input-group">
-                    <div className="input-group-prepend">
-                        <span className="input-group-text" id={`${label}_prepend`}>{label}</span>
-                    </div>
-                    <input className={`form-control ${error ? 'is-invalid' : ''}`}
+            <div className="field">
+                {label
+                    ? <label className="label">{label}</label>
+                    : null
+                }
+                <div className="control has-icons-left">
+                    <input className={`input ${error ? 'is-danger' : ''}`}
                            type={type}
-                           name = {name || null}
+                           name={name || null}
                            value={this.state.inputValue}
                            onChange={this.onInputChange}
                            onBlur={this.onInputBlur}
                            onFocus={this.onInputFocus}
                     />
-                    <div className="invalid-feedback">
-                        {error}
-                    </div>
+                    <span className="icon is-small is-left">
+                        <i className={`fas ${icon}`}/>
+                    </span>
                 </div>
-            );
+                <p className="help is-danger">
+                    {error}
+                </p>
+            </div>
+        );
     }
 }
 
-InputField.propTypes = {
+TimeInputField.propTypes = {
     label: PropTypes.string,
     name: PropTypes.string,
     error: PropTypes.string,
@@ -65,7 +72,8 @@ InputField.propTypes = {
     defaultValue: PropTypes.any,
     onChange: PropTypes.func,
     onBlur: PropTypes.func,
-    onFocus: PropTypes.func
+    onFocus: PropTypes.func,
+    icon: PropTypes.string
 };
 
-export default InputField;
+export default TimeInputField;

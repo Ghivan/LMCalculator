@@ -10,48 +10,55 @@ class PlayerProfile extends React.Component {
 
         if (isEmpty(details)) return <span className="font-weight-bold font-italic">Загрузка...</span>;
         return (
-            <div className="card m-1">
-                <div className="card-header">
-                    Игровой профиль <span className="font-weight-bold font-italic">
-                {details.nickname}
-                </span>
-                </div>
-                <div className="card-body">
-                    <div className="row">
-                        <div className="col-lg-3 col-md-4 col-sm-12 justify-content-sm-center">
+            <div className="section">
+                <div className="columns">
+                    <div className="column is-3">
+                        <figure className="image">
                             <img src={details.avatar}
-                                 className="img-fluid rounded mx-auto d-block p-1"
+                                 className="image"
                                  alt="Аватар игрока"/>
-                            <div>
-                                <a className="btn btn-sm btn-success btn-block p-1"
-                                   href="#"
-                                >
+                        </figure>
+                        <div className="section">
+                            <div className="buttons  is-centered">
+                                <button className="button is-success">
                                     Редактировать профиль
-                                </a>
-                                <a className="btn btn-sm btn-danger btn-block p-1"
-                                   href="#"
-                                   onClick={e => {
-                                       e.preventDefault();
-                                       logout();
-                                   }}
+                                </button>
+
+                                <button className="button is-danger"
+                                        onClick={e => {
+                                            e.preventDefault();
+                                            logout();
+                                        }}
                                 >
                                     Выйти из профиля
-                                </a>
+                                </button>
                             </div>
                         </div>
-                        <div className="col-lg-9 col-md-8 col-sm-12">
-                            <ul className="list-group list-group-flush">
-                                <li className="list-group-item">
-                                    Скорость исследования: <b>{details.stats.research} %</b>
-                                </li>
-                                <li className="list-group-item">
-                                    Скорость строительства: <b>{details.stats.building} %</b>
-                                </li>
-                                <li className="list-group-item">
-                                    Скорость тренировки: <b>{details.stats.training} %</b>
-                                </li>
-                            </ul>
-                        </div>
+                    </div>
+                    <div className="column is-8">
+                        <table className="table is-fullwidth is-hoverable is-striped">
+                            <thead>
+                            <tr>
+                                <th>Параметр</th>
+                                <th>Значение</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Скорость исследования</td>
+                                <td>{details.stats.research} %</td>
+                            </tr>
+                            <
+                                tr>
+                                <td>Скорость строительства</td>
+                                <td>{details.stats.building} %</td>
+                            </tr>
+                            <tr>
+                                <td>Скорость тренировки</td>
+                                <td>{details.stats.training} %</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -59,7 +66,7 @@ class PlayerProfile extends React.Component {
     }
 }
 
-PlayerProfile.propTypes ={
+PlayerProfile.propTypes = {
     logout: PropTypes.func,
     player: PropTypes.shape({
         id: PropTypes.string,
