@@ -1,18 +1,18 @@
 import ActionTypes from './PlayerActionTypes';
 
 export const authorize = token => ({
-    type: ActionTypes.AUTHORIZE,
+    class: ActionTypes.AUTHORIZE,
     payload: {
         token
     }
 });
 
 export const logout = () => ({
-    type: ActionTypes.LOGOUT
+    class: ActionTypes.LOGOUT
 });
 
 export const fetchDetails = details => ({
-    type: ActionTypes.FETCH_DETAILS,
+    class: ActionTypes.FETCH_DETAILS,
     payload: {
         details
     }

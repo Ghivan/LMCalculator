@@ -1,0 +1,263 @@
+import React from 'react';
+
+import {countTimeWithSpeedBonus, getFormattedNumberOutput} from "../helpers/functions";
+import CalculatorInputField from "../Components/CalculatorInputField";
+import {RESOURCES_TYPE, TROOPS_CLASSES} from "../helpers/constants";
+import TimeDisplay from "../Components/TimeDisplay";
+import TroopsCalculatorRow from "../Components/TroopsCalculatorRow";
+import ResourcesDisplayBox from "../Components/ResourcesDisplayBox";
+
+const FIELD_NAMES = {
+    SPEED_BONUS: 'speedBonus',
+};
+
+
+class TroopsCalculator extends React.Component {
+    state = {
+        seconds: 0,
+        [FIELD_NAMES.SPEED_BONUS]: 0,
+        time: {
+            [TROOPS_CLASSES.INFANTRY]: 0,
+            [TROOPS_CLASSES.CAVALRY]: 0,
+            [TROOPS_CLASSES.RANGED]: 0,
+            [TROOPS_CLASSES.SIEGE]: 0
+        },
+        might: {
+            [TROOPS_CLASSES.INFANTRY]: 0,
+            [TROOPS_CLASSES.CAVALRY]: 0,
+            [TROOPS_CLASSES.RANGED]: 0,
+            [TROOPS_CLASSES.SIEGE]: 0
+        },
+        resources: {
+            [TROOPS_CLASSES.INFANTRY]: {},
+            [TROOPS_CLASSES.CAVALRY]: {},
+            [TROOPS_CLASSES.RANGED]: {},
+            [TROOPS_CLASSES.SIEGE]: {}
+        },
+        errors: {}
+    };
+
+    setError = (field, message) => {
+        this.setState({
+            errors: {
+                ...this.state.errors,
+                [field]: message
+            }
+        })
+    };
+
+    clearError = field => {
+        this.setState({
+            errors: {
+                ...this.state.errors,
+                [field]: ''
+            }
+        })
+    };
+
+    onInputBlur = element => {
+        const fieldName = element.name;
+        if (this.state.errors[fieldName]) {
+            element.select();
+        }
+    };
+
+    onInputChange = element => {
+        const fieldName = element.name;
+        const value = element.value;
+
+        switch (fieldName) {
+            case FIELD_NAMES.SPEED_BONUS:
+                this.setSpeedBonusField(value);
+                break;
+
+            default:
+                return null;
+        }
+    };
+
+    setSpeedBonusField = valueToSet => {
+        const value = Number(valueToSet.replace(/,/g, '.'));
+        if (value < 0 || isNaN(value)) {
+            this.setError(FIELD_NAMES.SPEED_BONUS, 'Число больше 0');
+            this.setState({
+                [FIELD_NAMES.SPEED_BONUS]: 0
+            });
+        } else {
+            this.clearError(FIELD_NAMES.SPEED_BONUS);
+            this.setState({
+                [FIELD_NAMES.SPEED_BONUS]: value
+            });
+        }
+    };
+
+    setClassTime = (troopClass, time) => {
+        this.setState({
+            time: {
+                ...this.state.time,
+                [troopClass]: time
+            }
+        })
+    };
+
+    setClassMight = (troopClass, might) => {
+        this.setState({
+            might: {
+                ...this.state.might,
+                [troopClass]: might
+            }
+        })
+    };
+
+    setClassResources = (troopClass, resources) => {
+        this.setState({
+            resources: {
+                ...this.state.resources,
+                [troopClass]: {
+                    ...resources
+                }
+            }
+        })
+    };
+
+    getTotalMight = () => {
+        return Object.values(this.state.might).reduce((acc, currentValue) => acc + currentValue, 0);
+    };
+
+    getTotalTime = () => {
+        return Object.values(this.state.time).reduce((acc, currentValue) => acc + currentValue, 0);
+    };
+
+    getTotalResources = () => {
+        const total = Object.values(RESOURCES_TYPE).reduce((acc, curr) => {
+            acc[curr] = 0;
+            return acc;
+        }, {});
+        Object.values(RESOURCES_TYPE).map(resource => {
+            Object.values(TROOPS_CLASSES).map(troopClass => {
+                total[resource] += this.state.resources[troopClass][resource] || 0
+            })
+        });
+        return total;
+    };
+
+
+    render() {
+        const initialTime = this.getTotalTime();
+        const totalMight = this.getTotalMight();
+        const totalResources = this.getTotalResources();
+        const timeWithSpeedBonus = countTimeWithSpeedBonus(initialTime, this.state[FIELD_NAMES.SPEED_BONUS]);
+
+        return (
+            <div className="box">
+
+                <div className="columns is-centered">
+                    <div className="column is-half">
+                        <div className="card">
+                            <header className="card-header">
+                                <p className="card-header-title is-centered">
+                                    Бонус скорости тренировки
+                                </p>
+                            </header>
+                            <div className="card-content ">
+                                <div className="content  has-text-centered">
+                                    <CalculatorInputField name={FIELD_NAMES.SPEED_BONUS}
+                                                          defaultValue={this.state[FIELD_NAMES.SPEED_BONUS]}
+                                                          error={this.state.errors[FIELD_NAMES.SPEED_BONUS]}
+                                                          onChange={this.onInputChange}
+                                                          onBlur={this.onInputBlur}
+                                                          icon="fa-fast-forward"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="columns">
+                    <div className="column is-centered is-fullwidth">
+                        <table className="table is-striped is-fullwidth">
+                            <thead>
+                            <tr>
+                                <th/>
+                                <th>Класс 1</th>
+                                <th>Класс 2</th>
+                                <th>Класс 3</th>
+                                <th>Класс 4</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <TroopsCalculatorRow title="Пехота"
+                                                 class={TROOPS_CLASSES.INFANTRY}
+                                                 icon="fa-male"
+                                                 setTime={this.setClassTime}
+                                                 setMight={this.setClassMight}
+                                                 setResources={this.setClassResources}
+                            />
+                            <TroopsCalculatorRow title="Кавалерия"
+                                                 class={TROOPS_CLASSES.CAVALRY}
+                                                 icon="fa-chess-knight"
+                                                 setTime={this.setClassTime}
+                                                 setMight={this.setClassMight}
+                                                 setResources={this.setClassResources}
+                            />
+                            <TroopsCalculatorRow title="Лучники"
+                                                 class={TROOPS_CLASSES.RANGED}
+                                                 icon="fa-angle-double-up"
+                                                 setTime={this.setClassTime}
+                                                 setMight={this.setClassMight}
+                                                 setResources={this.setClassResources}
+                            />
+                            <TroopsCalculatorRow title="Осадные орудия"
+                                                 class={TROOPS_CLASSES.SIEGE}
+                                                 setTime={this.setClassTime}
+                                                 setMight={this.setClassMight}
+                                                 setResources={this.setClassResources}
+                                                 icon="fa-rocket"
+                            />
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th colSpan="5"
+                                    className="has-text-centered"
+                                >
+                                    Суммарная мощь армии: {
+                                    getFormattedNumberOutput(totalMight)
+                                }
+                                </th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div className="columns">
+                    <div className="column is-fullwidth">
+                        <h2 className="is-size-2 has-text-centered">Расчетное время</h2>
+
+                        <div className="columns is-multiline is-centered">
+                            <div className="column is-half-desktop is-12-tablet">
+                                <TimeDisplay title='Исходное время:'
+                                             seconds={initialTime}
+                                             color="info"
+                                />
+                            </div>
+                            <div className="column is-half-desktop is-12-tablet">
+                                <TimeDisplay title='Фактическое время:'
+                                             seconds={timeWithSpeedBonus}
+                                             color="success"
+                                />
+                            </div>
+                            <div className="column is-narrow">
+                                <ResourcesDisplayBox resources={totalResources}/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        )
+    }
+}
+
+export default TroopsCalculator;

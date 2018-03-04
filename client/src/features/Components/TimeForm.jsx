@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TimeInputField from './TimeInputField';
+import CalculatorInputField from './CalculatorInputField';
 
 import {getFormattedTime} from "../helpers/functions";
 
@@ -99,11 +99,11 @@ class TimeForm extends React.Component {
                             </header>
                             <div className="card-content">
                                 <div className="content has-text-centered">
-                                    <TimeInputField name={FIELD_NAMES.DAYS}
-                                                    defaultValue={this.state[FIELD_NAMES.DAYS]}
-                                                    error={this.state.errors[FIELD_NAMES.DAYS]}
-                                                    onChange={this.onInputChange}
-                                                    onBlur={this.onInputBlur}
+                                    <CalculatorInputField name={FIELD_NAMES.DAYS}
+                                                          defaultValue={this.state[FIELD_NAMES.DAYS]}
+                                                          error={this.state.errors[FIELD_NAMES.DAYS]}
+                                                          onChange={this.onInputChange}
+                                                          onBlur={this.onInputBlur}
                                     />
                                 </div>
                             </div>
@@ -119,11 +119,11 @@ class TimeForm extends React.Component {
                             </header>
                             <div className="card-content ">
                                 <div className="content  has-text-centered">
-                                    <TimeInputField name={FIELD_NAMES.HOURS}
-                                                    defaultValue={this.state[FIELD_NAMES.HOURS]}
-                                                    error={this.state.errors[FIELD_NAMES.HOURS]}
-                                                    onChange={this.onInputChange}
-                                                    onBlur={this.onInputBlur}
+                                    <CalculatorInputField name={FIELD_NAMES.HOURS}
+                                                          defaultValue={this.state[FIELD_NAMES.HOURS]}
+                                                          error={this.state.errors[FIELD_NAMES.HOURS]}
+                                                          onChange={this.onInputChange}
+                                                          onBlur={this.onInputBlur}
                                     />
                                 </div>
                             </div>
@@ -139,11 +139,11 @@ class TimeForm extends React.Component {
                             </header>
                             <div className="card-content ">
                                 <div className="content  has-text-centered">
-                                    <TimeInputField name={FIELD_NAMES.MINUTES}
-                                                    defaultValue={this.state[FIELD_NAMES.MINUTES]}
-                                                    error={this.state.errors[FIELD_NAMES.MINUTES]}
-                                                    onChange={this.onInputChange}
-                                                    onBlur={this.onInputBlur}
+                                    <CalculatorInputField name={FIELD_NAMES.MINUTES}
+                                                          defaultValue={this.state[FIELD_NAMES.MINUTES]}
+                                                          error={this.state.errors[FIELD_NAMES.MINUTES]}
+                                                          onChange={this.onInputChange}
+                                                          onBlur={this.onInputBlur}
                                     />
                                 </div>
                             </div>
@@ -159,11 +159,11 @@ class TimeForm extends React.Component {
                             </header>
                             <div className="card-content ">
                                 <div className="content  has-text-centered">
-                                    <TimeInputField name={FIELD_NAMES.SECONDS}
-                                                    defaultValue={this.state[FIELD_NAMES.SECONDS]}
-                                                    error={this.state.errors[FIELD_NAMES.SECONDS]}
-                                                    onChange={this.onInputChange}
-                                                    onBlur={this.onInputBlur}
+                                    <CalculatorInputField name={FIELD_NAMES.SECONDS}
+                                                          defaultValue={this.state[FIELD_NAMES.SECONDS]}
+                                                          error={this.state.errors[FIELD_NAMES.SECONDS]}
+                                                          onChange={this.onInputChange}
+                                                          onBlur={this.onInputBlur}
                                     />
                                 </div>
                             </div>

@@ -1,15 +1,15 @@
 import React from 'react';
-import TimeDisplay from "./Components/TimeDisplay";
-import {countTimeWithHelp, countTimeWithSpeedBonus} from "./helpers/functions";
-import TimeInputField from "./Components/TimeInputField";
-import TimeForm from "./Components/TimeForm";
+import TimeDisplay from "../Components/TimeDisplay";
+import {countTimeWithHelp, countTimeWithSpeedBonus} from "../helpers/functions";
+import CalculatorInputField from "../Components/CalculatorInputField";
+import TimeForm from "../Components/TimeForm";
 
 const FIELD_NAMES = {
     HELP_QUANTITY: 'helpQuantity',
     SPEED_BONUS: 'speedBonus'
 };
 
-class Calculator extends React.Component {
+class GeneralCalculator extends React.Component {
     state = {
         seconds: 0,
         [FIELD_NAMES.SPEED_BONUS]: 0,
@@ -61,7 +61,7 @@ class Calculator extends React.Component {
     };
 
     setHelpQuantityField = valueToSet => {
-        const value = Number(valueToSet.replace(/,/g, '.'));
+        const value = Number(valueToSet);
         if (value < 0 || value > 30 || isNaN(value) || (value % 1 !== 0)) {
             this.setError(FIELD_NAMES.HELP_QUANTITY, 'Целое число от 0 до 30');
             this.setState({
@@ -116,12 +116,12 @@ class Calculator extends React.Component {
                                 </header>
                                 <div className="card-content ">
                                     <div className="content  has-text-centered">
-                                        <TimeInputField name={FIELD_NAMES.SPEED_BONUS}
-                                                        defaultValue={this.state[FIELD_NAMES.SPEED_BONUS]}
-                                                        error={this.state.errors[FIELD_NAMES.SPEED_BONUS]}
-                                                        onChange={this.onInputChange}
-                                                        onBlur={this.onInputBlur}
-                                                        icon="fa-fast-forward"
+                                        <CalculatorInputField name={FIELD_NAMES.SPEED_BONUS}
+                                                              defaultValue={this.state[FIELD_NAMES.SPEED_BONUS]}
+                                                              error={this.state.errors[FIELD_NAMES.SPEED_BONUS]}
+                                                              onChange={this.onInputChange}
+                                                              onBlur={this.onInputBlur}
+                                                              icon="fa-fast-forward"
                                         />
                                     </div>
                                 </div>
@@ -137,12 +137,12 @@ class Calculator extends React.Component {
                                 </header>
                                 <div className="card-content">
                                     <div className="content  has-text-centered">
-                                        <TimeInputField name={FIELD_NAMES.HELP_QUANTITY}
-                                                        defaultValue={this.state[FIELD_NAMES.HELP_QUANTITY]}
-                                                        error={this.state.errors[FIELD_NAMES.HELP_QUANTITY]}
-                                                        onChange={this.onInputChange}
-                                                        onBlur={this.onInputBlur}
-                                                        icon="fa-handshake"
+                                        <CalculatorInputField name={FIELD_NAMES.HELP_QUANTITY}
+                                                              defaultValue={this.state[FIELD_NAMES.HELP_QUANTITY]}
+                                                              error={this.state.errors[FIELD_NAMES.HELP_QUANTITY]}
+                                                              onChange={this.onInputChange}
+                                                              onBlur={this.onInputBlur}
+                                                              icon="fa-handshake"
                                         />
                                     </div>
                                 </div>
@@ -156,13 +156,13 @@ class Calculator extends React.Component {
                     <div className="columns is-multiline">
                         <div className="column is-half-desktop is-12-tablet">
                             <TimeDisplay title='Фактическое время:'
-                                         seconds={!this.state.errorMessage ? timeWithSpeedBonus : null}
+                                         seconds={timeWithSpeedBonus}
                                          color="info"
                             />
                         </div>
                         <div className="column is-half-desktop is-12-tablet">
                             <TimeDisplay title='Время после помощи:'
-                                         seconds={!this.state.errorMessage ? timeWithHelp : null}
+                                         seconds={timeWithHelp}
                                          color="success"
                             />
                         </div>
@@ -173,4 +173,4 @@ class Calculator extends React.Component {
     }
 }
 
-export default Calculator;
+export default GeneralCalculator;

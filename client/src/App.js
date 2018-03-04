@@ -3,7 +3,8 @@ import {BrowserRouter as Router, Link, Redirect, Route, Switch} from 'react-rout
 
 import LoginForm from './features/LoginForm/ConnectedLoginForm';
 import PlayerProfile from './features/PlayerProfile/ConnectedPlayerProfile';
-import Calculator from './features/Calculator/Calculator';
+import GeneralCalculator from './features/Calculator/GeneralCalculator';
+import TroopsCalculator from "./features/Calculator/TroopsCalculator";
 
 
 class App extends Component {
@@ -47,7 +48,8 @@ class App extends Component {
                                              height="56"/>
                                     </Link>
                                     <div className="navbar-burger burger"
-                                         data-target="MainMenu">
+                                         data-target="MainMenu"
+                                    >
                                         <span/>
                                         <span/>
                                         <span/>
@@ -56,11 +58,25 @@ class App extends Component {
                                 <div className="navbar-menu"
                                      id="MainMenu">
                                     <div className="navbar-start">
-                                        <Link className="navbar-item"
-                                              to="/calculator"
-                                        >
-                                            Калькулятор
-                                        </Link>
+
+                                        <div className="navbar-item has-dropdown is-hoverable">
+                                            <a className="navbar-link">
+                                                Калькулятор
+                                            </a>
+
+                                            <div className="navbar-dropdown">
+                                                <Link className="navbar-item"
+                                                      to="/calculator/general"
+                                                >
+                                                    Общий
+                                                </Link>
+                                                <Link className="navbar-item"
+                                                      to="/calculator/troops"
+                                                >
+                                                    Войска (тренировка)
+                                                </Link>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div className="navbar-end">
@@ -74,14 +90,13 @@ class App extends Component {
                             </nav>
                             <Switch>
                                 <Route exact path="/login" component={LoginForm}/>
-                                <Route exact path="/calculator" render={
-                                    () => (
-                                        <Calculator totalSeconds={300}
-                                                    helpNumber={25}
-                                                    speedBonus={344.7}
-                                        />
-                                    )
-                                }/>
+                                <Route exact path="/calculator/general"
+                                       component={GeneralCalculator}
+                                />
+
+                                <Route exact path="/calculator/troops"
+                                       component={TroopsCalculator}
+                                />
                                 <Route path="/" render={() => <Redirect to={'/login'}/>}/>
                             </Switch>
                         </div>

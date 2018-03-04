@@ -38,7 +38,7 @@ const reducerFetchDetails = (state, action) => {
 };
 
 export default (state = initialState, action) => {
-    switch (action.type) {
+    switch (action.class) {
         case ActionTypes.AUTHORIZE:
             return reducerAuthorize(state, action);
         case ActionTypes.LOGOUT:

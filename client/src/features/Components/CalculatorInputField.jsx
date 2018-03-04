@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class TimeInputField extends React.Component {
+class CalculatorInputField extends React.Component {
     state = {
-        inputValue: this.props.defaultValue
+        inputValue: this.props.defaultValue || 0
     };
 
     onInputChange = e => {
@@ -36,6 +36,7 @@ class TimeInputField extends React.Component {
             label = '',
             icon='fa-clock'
         } = this.props;
+        const is_narrow = window.innerWidth <= 768;
 
         return (
             <div className="field">
@@ -43,8 +44,8 @@ class TimeInputField extends React.Component {
                     ? <label className="label">{label}</label>
                     : null
                 }
-                <div className="control has-icons-left">
-                    <input className={`input ${error ? 'is-danger' : ''}`}
+                <div className={`control ${!is_narrow ? 'has-icons-left' : ''}`}>
+                    <input className={`input ${error ? 'is-danger' : ''}  is-small`}
                            type={type}
                            name={name || null}
                            value={this.state.inputValue}
@@ -52,7 +53,7 @@ class TimeInputField extends React.Component {
                            onBlur={this.onInputBlur}
                            onFocus={this.onInputFocus}
                     />
-                    <span className="icon is-small is-left">
+                    <span className="icon is-small is-left is-hidden-mobile">
                         <i className={`fas ${icon}`}/>
                     </span>
                 </div>
@@ -64,7 +65,7 @@ class TimeInputField extends React.Component {
     }
 }
 
-TimeInputField.propTypes = {
+CalculatorInputField.propTypes = {
     label: PropTypes.string,
     name: PropTypes.string,
     error: PropTypes.string,
@@ -76,4 +77,4 @@ TimeInputField.propTypes = {
     icon: PropTypes.string
 };
 
-export default TimeInputField;
+export default CalculatorInputField;

@@ -4,59 +4,59 @@ const {ROLES, AVATARS} = require('../constants/');
 const PlayerSchema = mongoose.Schema(
     {
         nickname: {
-            type: String,
+            class: String,
             required: true,
             index: {
                 unique: true
             }
         },
         password: {
-            type: String,
+            class: String,
             required: true
         },
         role: {
-            type: Number,
+            class: Number,
             enum: Object.values(ROLES),
             default: ROLES.USER
         },
         avatar: {
-            type: String,
+            class: String,
             enum: Object.values(AVATARS.PATHS),
             default: AVATARS.PATHS.OATH_KEEPER
         },
         castleLevel: {
-            type: Number,
+            class: Number,
             default: 1
         },
         stats: {
             research:{
-                type: Number,
+                class: Number,
                 default: 0
             },
             building: {
-                type: Number,
+                class: Number,
                 default: 0
             },
             hunting: {
-                type: Number,
+                class: Number,
                 default: 0
             },
             training: {
-                type: Number,
+                class: Number,
                 default: 0
             },
         },
         bag: {
             speedUps: {
-                type: Array,
+                class: Array,
                 default: []
             },
             resources: {
-                type: Array,
+                class: Array,
                 default: []
             },
             energy: {
-                type: Array,
+                class: Array,
                 default: []
             }
         }

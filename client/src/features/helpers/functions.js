@@ -50,3 +50,7 @@ export const countTimeWithHelp = (seconds, helpNumber) => {
     }
     return rest < 0 ? 0 : Math.ceil(rest);
 };
+
+export const getFormattedNumberOutput = number => {
+    return number.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')
+};
