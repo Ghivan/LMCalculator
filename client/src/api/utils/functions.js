@@ -17,7 +17,8 @@ const checkOk = response => {
         })
         .catch(err => {
             const rejectionObject = {
-                ...err
+                ...err,
+                message: err.message || 'Что-то пошло не так, попробуйте перезагрузить страницу'
             };
             rejectionObject.status = response.status;
 

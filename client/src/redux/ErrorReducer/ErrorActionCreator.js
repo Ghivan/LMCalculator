@@ -1,14 +1,14 @@
 import ActionTypes from './ErrorActionTypes';
 
 export const setError = message => ({
-    class: ActionTypes.SET_ERROR,
+    type: ActionTypes.SET_ERROR,
     payload: {
         message
     }
 });
 
 export const clearError = () => ({
-    class: ActionTypes.CLEAR_ERROR
+    type: ActionTypes.CLEAR_ERROR
 });
 
 export default {
