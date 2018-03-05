@@ -11,6 +11,7 @@ const MenuItemsList = [
     },
     {
         title: 'Калькулятор',
+        rootPath: '/calculator',
         items: [
             {
                 title: 'Общий',

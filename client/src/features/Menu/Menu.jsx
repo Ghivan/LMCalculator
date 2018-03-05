@@ -39,6 +39,7 @@ class Menu extends React.Component {
                                     if (item.has_dropdown) {
                                         return <MenuItemWithDropdown title={item.title}
                                                                      items={item.items}
+                                                                     rootPath={item.rootPath}
                                                                      key={index}
 
                                         />

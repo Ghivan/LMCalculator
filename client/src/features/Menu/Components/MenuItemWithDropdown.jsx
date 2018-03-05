@@ -1,24 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
-const MenuItemWithDropdown = ({title, items}) => {
+const MenuItemWithDropdown = ({title, items, rootPath}) => {
     return (
         <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link">
+            <NavLink className="navbar-link"
+                     activeClassName="is-active"
+                     to={rootPath}
+            >
                 {title}
-            </a>
+            </NavLink>
 
             <div className="navbar-dropdown">
                 {items.map(
                     (item, index) => {
                         return (
-                            <Link className="navbar-item"
-                                  to={item.path}
-                                  key={index}
+                            <NavLink className="navbar-item"
+                                     activeClassName="is-active"
+                                     to={item.path}
+                                     key={index}
                             >
                                 {item.title}
-                            </Link>
+                            </NavLink>
                         )
                     }
                 )
@@ -30,6 +34,7 @@ const MenuItemWithDropdown = ({title, items}) => {
 
 MenuItemWithDropdown.propTypes = {
     title: PropTypes.string.isRequired,
+    rootPath: PropTypes.string.isRequired,
     items: PropTypes.arrayOf(
         PropTypes.shape(
             {

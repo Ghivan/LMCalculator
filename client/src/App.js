@@ -1,5 +1,5 @@
 import React from 'react';
-import AppRouter from "./api/Router/AppRouter";
+import AppRouter from "./features/Router/AppRouter";
 
 
 class App extends React.Component {
