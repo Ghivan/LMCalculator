@@ -1,29 +1,59 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import {PlayerProfileScreens} from "./PlayerProfileMenu/helpers/constants";
+import PlayerProfileMenu from "./PlayerProfileMenu/Menu";
+import PlayerStatsScreen from "./PlayerStatsScreen/PlayerStatsScreen";
 
 class PlayerProfile extends React.Component {
+
+    setScreen = (screen) => {
+        this.setState({
+            currentScreen: screen
+        })
+    };
+
+    renderScreen = screen => {
+        switch (screen) {
+            case PlayerProfileScreens.STATS:
+                return <PlayerStatsScreen stats={this.props.player.details.stats}/>;
+            case PlayerProfileScreens.BAG:
+                return <div>Bag</div>;
+            case PlayerProfileScreens.SETTINGS:
+                return <div>Settings</div>;
+            default:
+                return <div>Settings</div>;
+        }
+    };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentScreen: PlayerProfileScreens.STATS
+        }
+    }
 
     render() {
         const {details} = this.props.player;
         const {logout} = this.props;
 
-        if (isEmpty(details)) return <span className="font-weight-bold font-italic">Загрузка...</span>;
-        return (
+        if (isEmpty(details)) return (
             <div className="section">
-                <div className="columns">
-                    <div className="column is-3">
-                        <figure className="image">
-                            <img src={details.avatar}
-                                 className="image"
-                                 alt="Аватар игрока"/>
-                        </figure>
-                        <div className="section">
-                            <div className="buttons  is-centered">
-                                <button className="button is-success">
-                                    Редактировать профиль
-                                </button>
+                <div className="notification is-warning has-text-centered ">Загрузка...</div>
+            </div>
+        );
 
+        return (
+            <div className="box is-radiusless">
+
+                <div className="columns is-multiline">
+                    <div className="column is-one-fifth-desktop is-one-third-tablet is-full-mobile">
+                        <div className="section">
+                            <figure className="image">
+                                <img src={details.avatar}
+                                     alt="Аватар игрока"/>
+                            </figure>
+                            <div className="buttons  is-centered">
                                 <button className="button is-danger"
                                         onClick={e => {
                                             e.preventDefault();
@@ -35,30 +65,11 @@ class PlayerProfile extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="column is-8">
-                        <table className="table is-fullwidth is-hoverable is-striped">
-                            <thead>
-                            <tr>
-                                <th>Параметр</th>
-                                <th>Значение</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>Скорость исследования</td>
-                                <td>{details.stats.research} %</td>
-                            </tr>
-                            <
-                                tr>
-                                <td>Скорость строительства</td>
-                                <td>{details.stats.building} %</td>
-                            </tr>
-                            <tr>
-                                <td>Скорость тренировки</td>
-                                <td>{details.stats.training} %</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <div className="column is-four-fifth-desktop is-two-third-tablet is-full-mobile">
+                        <PlayerProfileMenu setScreen={this.setScreen}
+                                           activeScreen={this.state.currentScreen}
+                        />
+                        {this.renderScreen(this.state.currentScreen)}
                     </div>
                 </div>
             </div>

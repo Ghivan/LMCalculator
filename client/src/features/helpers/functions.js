@@ -9,7 +9,7 @@ export const getFormattedTime = seconds => {
 
 export const getRightWordForm = number => {
     const rest = number % 10;
-    if (rest === 0 || rest >= 5 || (number >= 10 && number <= 19)) {
+    if (rest === 0 || rest >= 5 || (number >= 10 && number <= 19) || (number % 100 >= 10 && number % 100 <= 19)) {
         return {
             days: 'дней',
             hours: 'часов',
