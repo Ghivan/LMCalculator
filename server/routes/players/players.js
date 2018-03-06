@@ -3,7 +3,8 @@ const bcrypt = require('bcrypt');
 
 const {PlayerModel} = require('../../model/database');
 const {transform} = require('../../model/utils/functions');
-const {AccessPermission, checkPlayerAccessRights} = require('../../auth/utils/checkAccessRights')
+const {AccessPermission, checkPlayerAccessRights} = require('../../auth/utils/checkAccessRights');
+const {PASSWORD_LENGTH} = require('./helpers/constants')
 
 
 module.exports = () => {
@@ -34,7 +35,21 @@ module.exports = () => {
         }
 
         PlayerModel.findById(id)
-            .then(player => res.send(transform(player, ['password', 'role', 'id'])), next);
+            .then(player => {
+                if (!player) {
+                    res.status(404);
+                    res.json({
+                        message: 'Игрок не найден'
+                    })
+                }
+                res.json(transform(player, ['password', 'role', 'id']))
+            })
+            .catch(err => {
+                res.status(500);
+                res.json({
+                    message: 'Ошибка запроса'
+                })
+            });
 
     });
 
@@ -49,14 +64,14 @@ module.exports = () => {
 
         const {nickname, password} = req.body;
 
-        if (!nickname || !password){
+        if (!nickname || !password) {
             res.status(400);
             return res.send({
                 message: 'Имя игрока или пароль не должны быть пустыми'
             });
         }
 
-        if (password.length < 6){
+        if (password.length < PASSWORD_LENGTH) {
             res.status(400);
             return res.send({
                 message: 'Длина пароля должна быть не менее 6 символов'
@@ -65,14 +80,14 @@ module.exports = () => {
 
         PlayerModel.findOne({nickname})
             .then(player => {
-               if (player){
-                   res.status(400);
-                   return res.send({
-                       message: 'Игрок с таким именем уже существует'
-                   });
-               }
+                if (player) {
+                    res.status(400);
+                    return res.send({
+                        message: 'Игрок с таким именем уже существует'
+                    });
+                }
                 bcrypt.hash(password, 10, (err, hash) => {
-                    if (!err){
+                    if (!err) {
                         const newPlayer = new PlayerModel({
                             nickname,
                             password: hash
@@ -80,12 +95,12 @@ module.exports = () => {
 
                         newPlayer.save()
                             .then(player => {
-                                if (player){
-                                    res.send(transform(player,['password']))
+                                if (player) {
+                                    res.send(transform(player, ['password']))
                                 }
                             })
                             .catch(err => {
-                                if (err.code === 11000){
+                                if (err.code === 11000) {
                                     res.status(400);
                                     res.send({
                                         message: 'Игрок с таким именем уже существует'
@@ -105,6 +120,80 @@ module.exports = () => {
                     }
                 })
             });
+    });
+
+    router.put('/players/stats', (req, res, next) => {
+        const accessGranted = checkPlayerAccessRights(AccessPermission.REQUESTING_PLAYER, req);
+        if (!accessGranted) {
+            res.status(403);
+            return res.json({
+                message: 'Доступ запрещен'
+            })
+        }
+
+        PlayerModel.findById(req.body.loggedInPlayer.id)
+            .then(player => {
+                if (!player) {
+                    res.status(404);
+                    res.send({
+                        message: 'Игрок не найден'
+                    });
+                }
+
+
+                const {stats} = req.body;
+                if (!stats){
+                    res.status(400);
+                    res.send({
+                        message: 'Данные не переданы!'
+                    });
+                }
+
+                const {training, building, research} = req.body.stats;
+                let errorMessage = '';
+
+                if (training) {
+                    if (typeof training === 'number'){
+                        player.stats.training = training
+                    } else {
+                        errorMessage += 'Значение скорости тренировки должно быть числом. '
+                    }
+                }
+
+                if (building) {
+                    if (typeof building === 'number'){
+                        player.stats.building = building
+                    } else {
+                        errorMessage += 'Значение скорости строительства должно быть числом. '
+                    }
+                }
+
+                if (research) {
+                    if (typeof research === 'number'){
+                        player.stats.research = research
+                    } else {
+                        errorMessage += 'Значение скорости исследования должно быть числом. '
+                    }
+                }
+
+                if (errorMessage) {
+                    res.status(400);
+                    res.send({
+                        message: errorMessage
+                    });
+                } else {
+                    return player.save().then(player => {
+                        res.json(transform(player, ['password']))
+                    })
+                }
+            })
+            .catch(err => {
+                res.status(500);
+                res.send({
+                    message: err.message
+                });
+            });
+
     });
 
     return router;

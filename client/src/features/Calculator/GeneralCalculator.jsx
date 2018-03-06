@@ -1,8 +1,9 @@
 import React from 'react';
-import TimeDisplay from "../Components/TimeDisplay";
-import {countTimeWithHelp, countTimeWithSpeedBonus} from "../helpers/functions";
-import CalculatorInputField from "../Components/CalculatorInputField";
-import TimeForm from "../Components/TimeForm";
+
+import {countTimeWithHelp, countTimeWithSpeedBonus} from "../Global/Functions/time";
+import TimeDisplay from "../Global/Components/Time/TimeDisplay";
+import CalculatorInputField from "../Global/Components/Calculator/CalculatorInputField";
+import TimeForm from "../Global/Components/Time/TimeForm";
 
 const FIELD_NAMES = {
     HELP_QUANTITY: 'helpQuantity',

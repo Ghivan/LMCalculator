@@ -1,7 +1,7 @@
 import React from 'react';
 import PropType from 'prop-types';
 
-import {getFormattedTime, getRightWordForm} from "../helpers/functions";
+import {getFormattedTime, getRightWordForm} from "../../Functions/general";
 
 const TimeDisplay = ({seconds = 0, title = '', color = 'warning'}) => {
     const formattedTime = getFormattedTime(seconds);

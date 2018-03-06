@@ -74,7 +74,8 @@ class PlayerStatsForm extends React.Component {
             stats: {
                 ...this.props.stats
             },
-            shouldResetInputs: true
+            shouldResetInputs: true,
+            errors: {}
         }, () => this.setState({
             shouldResetInputs: false
         }))

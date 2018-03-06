@@ -1,10 +1,4 @@
-export const RESOURCES_TYPE = {
-    FOOD: 'food',
-    TIMBER: 'timber',
-    STONE: 'stone',
-    ORE: 'ore',
-    GOLD: 'gold'
-};
+import {RESOURCES_TYPE} from './resources';
 
 export const TROOPS_TIERS = {
     T1: 'tier1',

@@ -1,11 +1,14 @@
 import React from 'react';
 
-import {countTimeWithSpeedBonus, getFormattedNumberOutput} from "../helpers/functions";
-import CalculatorInputField from "../Components/CalculatorInputField";
-import {RESOURCES_TYPE, TROOPS_CLASSES} from "../helpers/constants";
-import TimeDisplay from "../Components/TimeDisplay";
-import TroopsCalculatorRow from "../Components/TroopsCalculatorRow";
-import ResourcesDisplayBox from "../Components/ResourcesDisplayBox";
+import {getFormattedNumberOutput} from "../Global/Functions/general";
+import {countTimeWithSpeedBonus} from "../Global/Functions/time";
+import {TROOPS_CLASSES} from "../Global/Constants/troops";
+import {RESOURCES_TYPE} from "../Global/Constants/resources";
+
+import CalculatorInputField from "../Global/Components/Calculator/CalculatorInputField";
+import TimeDisplay from "../Global/Components/Time/TimeDisplay";
+import TroopsCalculatorRow from "../Global/Components/Calculator/TroopsCalculatorRow";
+import ResourcesDisplayBox from "../Global/Components/Resources/ResourcesDisplayBox";
 
 const FIELD_NAMES = {
     SPEED_BONUS: 'speedBonus',

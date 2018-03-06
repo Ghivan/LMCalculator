@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {RESOURCES_TYPE} from "../helpers/constants";
-import {getFormattedNumberOutput} from "../helpers/functions";
+import {RESOURCES_TYPE} from "../../Constants/resources";
+import {getFormattedNumberOutput} from "../../Functions/general";
 
 const ResourcesDisplayBox = (
     {

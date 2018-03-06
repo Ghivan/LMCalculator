@@ -21,7 +21,6 @@ const PlayerSchema = mongoose.Schema(
         },
         avatar: {
             type: String,
-            enum: Object.values(AVATARS.PATHS),
             default: AVATARS.PATHS.OATH_KEEPER
         },
         castleLevel: {
@@ -48,7 +47,7 @@ const PlayerSchema = mongoose.Schema(
         },
         bag: {
             speedUps: {
-                class: Array,
+                type: Array,
                 default: []
             },
             resources: {

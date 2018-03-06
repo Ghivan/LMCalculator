@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {RESOURCES_TYPE} from '../../Constants/resources';
+import {TROOPS_TIERS, TROOPS_COST, TROOPS_MIGHT, TROOPS_TRAINING_TIME} from '../../Constants/troops';
 import CalculatorInputField from "./CalculatorInputField";
-import {TROOPS_TIERS, TROOPS_COST, TROOPS_MIGHT, TROOPS_TRAINING_TIME, RESOURCES_TYPE} from '../helpers/constants';
-
 
 class TroopsCalculatorRow extends React.Component {
 

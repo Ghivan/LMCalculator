@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CalculatorInputField from './CalculatorInputField';
+import CalculatorInputField from '../Calculator/CalculatorInputField';
 
-import {getFormattedTime} from "../helpers/functions";
+import {getFormattedTime} from "../../Functions/general";
 
 const FIELD_NAMES = {
     DAYS: 'days',
@@ -66,7 +66,7 @@ class TimeForm extends React.Component {
             [FIELD_NAMES.DAYS]: Infinity
         };
         if (time < 0 || time > limits[field] || isNaN(time) || (time % 1 !== 0)) {
-            this.setError(field, `Целое число от 0 до ${limits[field]}`);
+            this.setError(field, `Целое число от 0${Number.isFinite(limits[field]) ? ' до ' + limits[field]  : ''}`);
             this.setState({
                 [field]: 0
             });
