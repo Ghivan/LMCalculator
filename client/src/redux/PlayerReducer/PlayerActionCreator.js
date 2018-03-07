@@ -18,6 +18,13 @@ export const fetchDetails = details => ({
     }
 });
 
+export const updateStats = stats => ({
+    type: ActionTypes.UPDATE_STATS,
+    payload: {
+        stats
+    }
+});
+
 export default {
     login: (credentials) => {
         return (dispatch, getState, api) => {
@@ -64,5 +71,17 @@ export default {
         return dispatch => {
             dispatch(logout());
         }
+    },
+
+    updateStats: stats => {
+        return (dispatch, getState, api) => {
+            return api.players.updatePlayersStats(getState().player.token, stats)
+                .then(response => {
+                    dispatch(updateStats(response));
+                })
+                .catch(err => {
+                    api.error.setError(err.message);
+                })
+        };
     }
 };

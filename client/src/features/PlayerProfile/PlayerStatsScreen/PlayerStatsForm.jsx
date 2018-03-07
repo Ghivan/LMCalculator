@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import isEqual from 'lodash/isEqual';
 
 import PlayerInputField from "../PlayerInputField";
 
@@ -67,6 +68,27 @@ class PlayerStatsForm extends React.Component {
                 }
             });
         }
+    };
+
+    hasErrors = () => {
+        const errors = Object.values(this.state.errors);
+        for (let i = 0; i < errors.length; i++) {
+            if (errors[i] !== '') {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    updateStats = () => {
+        if (this.hasErrors()) return;
+        this.props.updateStats(this.state.stats);
+        this.setState({
+            shouldResetInputs: true,
+            errors: {}
+        }, () => this.setState({
+            shouldResetInputs: false
+        }))
     };
 
     resetStats = () => {
@@ -147,9 +169,10 @@ class PlayerStatsForm extends React.Component {
                             Сбросить
                         </button>
                         <button className="button is-success"
+                                disabled={isEqual(this.state.stats, this.props.stats) || this.hasErrors() ? 'is-disabled' : ''}
                                 onClick={e => {
                                     e.preventDefault();
-                                    console.warn(this.state.stats);
+                                    this.updateStats();
                                 }}
                         >
                             Сохранить
@@ -167,7 +190,8 @@ PlayerStatsForm.propTypes = {
         building: PropTypes.number,
         training: PropTypes.number
     }),
-    toggle: PropTypes.func
+    toggle: PropTypes.func,
+    updateStats: PropTypes.func.isRequired
 };
 
 export default PlayerStatsForm;

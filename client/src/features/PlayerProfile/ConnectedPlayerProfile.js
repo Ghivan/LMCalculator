@@ -6,7 +6,8 @@ import PlayerActionCreator from '../../redux/PlayerReducer/PlayerActionCreator';
 import PlayerProfile from './PlayerProfile';
 
 const ActionCreator = {
-    logout: PlayerActionCreator.logout
+    logout: PlayerActionCreator.logout,
+    updateStats: PlayerActionCreator.updateStats
 };
 
 const mapStateToProps = state => {

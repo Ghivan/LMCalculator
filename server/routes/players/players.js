@@ -138,6 +138,7 @@ module.exports = () => {
                     res.send({
                         message: 'Игрок не найден'
                     });
+                    res.end();
                 }
 
 
@@ -147,6 +148,7 @@ module.exports = () => {
                     res.send({
                         message: 'Данные не переданы!'
                     });
+                    res.end();
                 }
 
                 const {training, building, research} = req.body.stats;
@@ -183,7 +185,7 @@ module.exports = () => {
                     });
                 } else {
                     return player.save().then(player => {
-                        res.json(transform(player, ['password']))
+                        res.json(player.stats)
                     })
                 }
             })

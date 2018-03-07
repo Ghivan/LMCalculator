@@ -18,7 +18,12 @@ class PlayerStatsScreen extends React.Component {
         const {stats} = this.props;
 
         if (this.state.editMode) {
-            return <PlayerStatsForm stats={stats} toggle={this.toggleEditMode}/>
+            return (
+                <PlayerStatsForm stats={stats}
+                                 toggle={this.toggleEditMode}
+                                 updateStats={this.props.updateStats}
+                />
+            )
         } else {
             return <PlayerStatsTable stats={stats} toggle={this.toggleEditMode}/>
         }
@@ -30,7 +35,8 @@ PlayerStatsScreen.propTypes = {
         research: PropTypes.number,
         building: PropTypes.number,
         training: PropTypes.number
-    })
+    }),
+    updateStats: PropTypes.func.isRequired
 };
 
 export default PlayerStatsScreen

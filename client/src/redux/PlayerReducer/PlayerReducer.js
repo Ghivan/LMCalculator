@@ -37,6 +37,16 @@ const reducerFetchDetails = (state, action) => {
     }
 };
 
+const reducerUpdateStats = (state, action) => {
+    return {
+        ...state,
+        details: {
+            ...state.details,
+            stats: action.payload.stats
+        }
+    }
+};
+
 export default (state = initialState, action) => {
     switch (action.type) {
         case ActionTypes.AUTHORIZE:
@@ -45,6 +55,8 @@ export default (state = initialState, action) => {
             return reducerLogout(state, action);
         case ActionTypes.FETCH_DETAILS:
             return reducerFetchDetails(state, action);
+        case ActionTypes.UPDATE_STATS:
+            return reducerUpdateStats(state, action);
         default:
             return state
     }

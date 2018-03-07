@@ -16,7 +16,11 @@ class PlayerProfile extends React.Component {
     renderScreen = screen => {
         switch (screen) {
             case PlayerProfileScreens.STATS:
-                return <PlayerStatsScreen stats={this.props.player.details.stats}/>;
+                return (
+                    <PlayerStatsScreen stats={this.props.player.details.stats}
+                                       updateStats={this.props.updateStats}
+                    />
+                );
             case PlayerProfileScreens.BAG:
                 return <div>Bag</div>;
             case PlayerProfileScreens.SETTINGS:
