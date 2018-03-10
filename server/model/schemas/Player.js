@@ -47,16 +47,15 @@ const PlayerSchema = mongoose.Schema(
         },
         bag: {
             speedUps: {
-                type: Array,
-                default: []
+                type: Object
             },
             resources: {
-                type: Array,
-                default: []
+                type: Object,
+                default: {}
             },
             energy: {
-                type: Array,
-                default: []
+                type: Object,
+                default: {}
             }
         }
     },

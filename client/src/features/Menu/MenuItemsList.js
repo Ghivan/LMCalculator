@@ -18,7 +18,7 @@ const MenuItemsList = [
                 path: '/calculator/general'
             },
             {
-                title: 'Войска тренировка',
+                title: 'Войска (тренировка)',
                 path: '/calculator/training'
             }
         ],

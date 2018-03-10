@@ -28,21 +28,26 @@ class FloatError extends React.Component {
 
     render() {
         const {message} = this.props;
-        return (
-            <div className="modal is-active">
-                <div onClick={this.clearError} className="modal-background"/>
-                <div className="modal-content">
-                    <article className="message is-danger">
-                        <div className="message-header">
-                            <p>Ошибка!</p>
-                        </div>
-                        <div className="message-body">
-                            {message}
-                        </div>
-                    </article>
+        if (message){
+            return (
+                <div className="modal is-active">
+                    <div onClick={this.clearError} className="modal-background"/>
+                    <div className="modal-content">
+                        <article className="message is-danger">
+                            <div className="message-header">
+                                <p>Ошибка!</p>
+                            </div>
+                            <div className="message-body">
+                                {message}
+                            </div>
+                        </article>
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        } else {
+            return null
+        }
+
     }
 }
 

@@ -47,6 +47,19 @@ const reducerUpdateStats = (state, action) => {
     }
 };
 
+const reducerUpdateSpeedUps = (state, action) => {
+    return {
+        ...state,
+        details: {
+            ...state.details,
+            bag: {
+                ...state.details.bag,
+                speedUps: action.payload.speedUps
+            }
+        }
+    }
+};
+
 export default (state = initialState, action) => {
     switch (action.type) {
         case ActionTypes.AUTHORIZE:
@@ -57,6 +70,8 @@ export default (state = initialState, action) => {
             return reducerFetchDetails(state, action);
         case ActionTypes.UPDATE_STATS:
             return reducerUpdateStats(state, action);
+        case ActionTypes.UPDATE_SPEED_UPS:
+            return reducerUpdateSpeedUps(state, action);
         default:
             return state
     }

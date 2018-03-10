@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {InputNames} from './constants';
 import validate from './utils/functions';
 
-import FloatError from "../Errors/FloatError/FloatError";
 import InputField from './InputField/InputField';
 
 class LoginForm extends React.Component {
@@ -65,10 +64,8 @@ class LoginForm extends React.Component {
     };
 
     render() {
-        const {error} = this.props;
         return (
             <div className="section">
-                {error ? <FloatError message={error}/> : null}
                 <div className="columns is-centered">
                     <div className="column is-one-third is-narrow">
                         <div className="box">

@@ -9,9 +9,7 @@ const ActionCreator = {
     login: PlayerActionCreator.login
 };
 
-const mapStateToProps = state => ({
-    error: state.error.message
-});
+const mapStateToProps = state => ({});
 
 const ConnectedLoginForm = connect(mapStateToProps,
     dispatch => bindActionCreators(dispatch, ActionCreator))(LoginForm);

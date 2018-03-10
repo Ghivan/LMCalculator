@@ -25,6 +25,13 @@ export const updateStats = stats => ({
     }
 });
 
+export const updateSpeedUps = (speedUps) => ({
+    type: ActionTypes.UPDATE_SPEED_UPS,
+    payload: {
+        speedUps
+    }
+});
+
 export default {
     login: (credentials) => {
         return (dispatch, getState, api) => {
@@ -78,6 +85,18 @@ export default {
             return api.players.updatePlayersStats(getState().player.token, stats)
                 .then(response => {
                     dispatch(updateStats(response));
+                })
+                .catch(err => {
+                    api.error.setError(err.message);
+                })
+        };
+    },
+
+    updateSpeedUps: (type, speedUps) => {
+        return (dispatch, getState, api) => {
+            return api.players.updatePlayersSpeedUps(getState().player.token, type, speedUps)
+                .then(response => {
+                    dispatch(updateSpeedUps(response));
                 })
                 .catch(err => {
                     api.error.setError(err.message);

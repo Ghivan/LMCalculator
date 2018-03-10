@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+
 import {PlayerProfileScreens} from "./PlayerProfileMenu/helpers/constants";
 import PlayerProfileMenu from "./PlayerProfileMenu/Menu";
 import PlayerStatsScreen from "./PlayerStatsScreen/PlayerStatsScreen";
+import BagScreen from "./BagScreen/BagScreen";
 
 class PlayerProfile extends React.Component {
-
     setScreen = (screen) => {
         this.setState({
             currentScreen: screen
         })
     };
-
     renderScreen = screen => {
         switch (screen) {
             case PlayerProfileScreens.STATS:
@@ -22,11 +22,19 @@ class PlayerProfile extends React.Component {
                     />
                 );
             case PlayerProfileScreens.BAG:
-                return <div>Bag</div>;
+                return (
+                    <BagScreen speedUps={this.props.player.details.bag.speedUps || {}}
+                               updateSpeedUps={this.props.updateSpeedUps}
+                    />
+                );
             case PlayerProfileScreens.SETTINGS:
                 return <div>Settings</div>;
             default:
-                return <div>Settings</div>;
+                return (
+                    <PlayerStatsScreen stats={this.props.player.details.stats}
+                                       updateStats={this.props.updateStats}
+                    />
+                );
         }
     };
 
@@ -83,6 +91,8 @@ class PlayerProfile extends React.Component {
 
 PlayerProfile.propTypes = {
     logout: PropTypes.func,
+    updateSpeedUps: PropTypes.func,
+    updateStats: PropTypes.func,
     player: PropTypes.shape({
         id: PropTypes.string,
         details: PropTypes.shape({

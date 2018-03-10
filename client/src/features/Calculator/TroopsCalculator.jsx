@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {getFormattedNumberOutput} from "../Global/Functions/general";
 import {countTimeWithSpeedBonus} from "../Global/Functions/time";
@@ -18,7 +19,7 @@ const FIELD_NAMES = {
 class TroopsCalculator extends React.Component {
     state = {
         seconds: 0,
-        [FIELD_NAMES.SPEED_BONUS]: 0,
+        [FIELD_NAMES.SPEED_BONUS]: this.props.speedBonus || 0,
         time: {
             [TROOPS_CLASSES.INFANTRY]: 0,
             [TROOPS_CLASSES.CAVALRY]: 0,
@@ -262,5 +263,9 @@ class TroopsCalculator extends React.Component {
         )
     }
 }
+
+TroopsCalculator.propTypes = {
+    speedBonus: PropTypes.number
+};
 
 export default TroopsCalculator;

@@ -1,5 +1,8 @@
 import React from 'react';
+
 import AppRouter from "./features/Router/AppRouter";
+import FloatError from "./features/Errors/FloatError/FloatError";
+import Modal from "./features/Modal/Modal";
 
 
 class App extends React.Component {
@@ -18,8 +21,12 @@ class App extends React.Component {
 
     render() {
         const {id} = this.props.player;
+        const {error} = this.props;
             return (
                 <div>
+                    <Modal>
+                        <FloatError message={error}/>
+                    </Modal>
                     <section className="hero is-primary">
                         <div className="hero-body">
                             <div className="container">
@@ -32,7 +39,7 @@ class App extends React.Component {
                             </div>
                         </div>
                     </section>
-                    <AppRouter is_loggedIn={id !== ''}/>
+                    <AppRouter is_loggedIn={id !== ''} player={this.props.player}/>
                 </div>
             )
     }

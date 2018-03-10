@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class PlayerInputField extends React.Component {
+class InputField extends React.Component {
     state = {
-        inputValue: this.props.defaultValue || 0,
+        inputValue: String(this.props.defaultValue) || 0,
         isChanged: false,
-        initialValue: this.props.defaultValue.toString() || 0
+        initialValue: String(this.props.defaultValue) || 0
     };
 
     onInputChange = e => {
@@ -75,7 +75,7 @@ class PlayerInputField extends React.Component {
                             {error}
                         </p>
                         <p className="help is-warning">
-                            {this.state.isChanged ? 'Значение изменено' : ''}
+                            {this.state.isChanged && !error ? 'Значение изменено' : ''}
                         </p>
                     </div>
                 </div>
@@ -86,7 +86,7 @@ class PlayerInputField extends React.Component {
     }
 }
 
-PlayerInputField.propTypes = {
+InputField.propTypes = {
     label: PropTypes.string,
     name: PropTypes.string,
     error: PropTypes.string,
@@ -99,4 +99,4 @@ PlayerInputField.propTypes = {
     shouldReset: PropTypes.bool
 };
 
-export default PlayerInputField;
+export default InputField;

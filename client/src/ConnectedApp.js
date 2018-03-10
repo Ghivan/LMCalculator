@@ -10,7 +10,8 @@ const ActionCreator = {
 };
 
 const mapStateToProps = state => ({
-    player: state.player
+    player: state.player,
+    error: state.error.message
 });
 
 const ConnectedApp = connect(mapStateToProps,

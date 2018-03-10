@@ -9,7 +9,8 @@ import GeneralCalculator from "../Calculator/GeneralCalculator";
 import LoginForm from "../LoginForm/ConnectedLoginForm";
 import Menu from "../Menu/Menu";
 
-const renderAuthorizedRoutes = () => {
+const renderAuthorizedRoutes = (player) => {
+    const {stats} = player.details;
     return (
         <Switch>
             <Route exact path="/profile"
@@ -20,7 +21,7 @@ const renderAuthorizedRoutes = () => {
                     case '/calculator/general':
                         return <GeneralCalculator/>;
                     case '/calculator/training':
-                        return <TroopsCalculator/>;
+                        return <TroopsCalculator speedBonus={stats ? stats.training : null}/>;
                     default:
                         return <GeneralCalculator/>;
                 }
@@ -45,14 +46,16 @@ const renderUnauthorizedRoutes = () => {
 
 const AppRouter = (
     {
-        is_loggedIn = false
+        is_loggedIn = false,
+        player
     }
 ) => {
+
     return (
         <Router>
             <div>
                 <Menu is_loggedIn={is_loggedIn}/>
-                {is_loggedIn ? renderAuthorizedRoutes() : renderUnauthorizedRoutes()}
+                {is_loggedIn ? renderAuthorizedRoutes(player) : renderUnauthorizedRoutes()}
             </div>
         </Router>
     )

@@ -1,7 +1,7 @@
-const PlayerRoles = {
-    OWNER: 9999,
-    ADMIN: 999,
-    USER: 0
-};
+const PlayerRoles = require('./roles');
+const speedUps = require('./speedups');
 
-module.exports = PlayerRoles;
+module.exports = {
+    ROLES: PlayerRoles,
+    SPEED_UPS: speedUps
+};
