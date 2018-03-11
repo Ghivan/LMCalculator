@@ -62,7 +62,7 @@ class PlayerProfile extends React.Component {
                     <div className="column is-one-fifth-desktop is-one-third-tablet is-full-mobile">
                         <div className="section">
                             <figure className="image">
-                                <img src={details.avatar}
+                                <img src={`${details.avatar}`}
                                      alt="Аватар игрока"/>
                             </figure>
                             <div className="buttons  is-centered">

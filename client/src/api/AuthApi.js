@@ -1,16 +1,12 @@
 import {makeRequestWithBody} from './utils/functions'
-
-const AuthUrls = {
-    LOGIN: '/auth/login',
-    VERIFY_TOKEN: '/auth/verify'
-};
+import {AUTH_URLS} from "./constants/constants";
 
 const AuthAPI = {
     login: credentials => {
-        return makeRequestWithBody(AuthUrls.LOGIN, 'POST', credentials)
+        return makeRequestWithBody(AUTH_URLS.LOGIN, 'POST', credentials)
     },
     verify: token => {
-        return makeRequestWithBody(AuthUrls.VERIFY_TOKEN, 'POST', {token})
+        return makeRequestWithBody(AUTH_URLS.VERIFY_TOKEN, 'POST', {token})
     }
 };
 

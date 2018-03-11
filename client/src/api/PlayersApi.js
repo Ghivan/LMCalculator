@@ -1,6 +1,7 @@
 import {makeGetRequestWithHeaders, makeRequestWithBody} from './utils/functions'
+import {PLAYERS_API_URL} from "./constants/constants";
 
-const PLAYERS_API_URL = '/api/players/';
+
 
 const PlayersAPI = {
     getDetails: (token, id) => {

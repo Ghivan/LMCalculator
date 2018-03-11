@@ -19,7 +19,7 @@ class Menu extends React.Component {
             <div className="navbar is-info" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
                     <Link className="navbar-item" to="/">
-                        <img src="/images/Icon.png"
+                        <img src="/img/Icon.png"
                              alt="Lm Calculator"
                              height="56"/>
                     </Link>

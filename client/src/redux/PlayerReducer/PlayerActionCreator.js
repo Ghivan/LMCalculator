@@ -37,10 +37,15 @@ export default {
         return (dispatch, getState, api) => {
             return api.auth.login(credentials)
                 .then(response => {
-                    dispatch(authorize(response.token));
+                    if (response.token) {
+                        dispatch(authorize(response.token));
+                    } else {
+                        throw new Error('Ошибка авторизации')
+                    }
                 })
                 .catch(err => {
-                    api.error.setError(err.message)
+                    api.error.setError(err.message);
+                    if (err.status === 401) dispatch(logout());
                 })
         };
     },
@@ -49,7 +54,7 @@ export default {
         return (dispatch, getState, api) => {
             return api.auth.verify(token)
                 .then(response => {
-                    if (response.isValid){
+                    if (response.isValid) {
                         dispatch(authorize(token));
                     } else {
                         throw new Error('Срок сессии истек. Пожалуйста, авторизируйтесь')
@@ -70,6 +75,7 @@ export default {
                 })
                 .catch(err => {
                     api.error.setError(err.message);
+                    if (err.status === 401) dispatch(logout());
                 })
         };
     },
@@ -88,6 +94,7 @@ export default {
                 })
                 .catch(err => {
                     api.error.setError(err.message);
+                    if (err.status === 401) dispatch(logout());
                 })
         };
     },
@@ -100,6 +107,7 @@ export default {
                 })
                 .catch(err => {
                     api.error.setError(err.message);
+                    if (err.status === 401) dispatch(logout());
                 })
         };
     }

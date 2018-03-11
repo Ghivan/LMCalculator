@@ -5,8 +5,10 @@ const DBNames = {
     PLAYERS: 'players'
 };
 
+const MONGO_URL = "mongodb://localhost/lm-calculator";
+
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGO_CONNECTION || 'mongodb://localhost/LMCalculator')
+mongoose.connect(process.env.MONGO_CONNECTION || MONGO_URL)
     .catch(err => console.warn(err.message));
 
 const PlayerModel = mongoose.model(DBNames.PLAYERS, PlayerSchema);
