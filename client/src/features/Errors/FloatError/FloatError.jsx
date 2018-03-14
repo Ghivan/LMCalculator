@@ -1,52 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-const TIME_TO_SHOW = 2000;
+import $ from 'jquery';
+import 'bootstrap/dist/js/bootstrap.js';
 
 class FloatError extends React.Component {
     state = {
-        timer: null
+        timer: null,
     };
 
     componentDidMount() {
-        const timer = setTimeout(() => {
-            if (!this.props.clearError) return;
-            this.props.clearError()
-        }, TIME_TO_SHOW);
-        this.setState({timer})
+        $(this.modal).modal('show');
     }
 
-    clearError = () => {
-        if (this.state.timer) {
-            clearTimeout(this.state.timer)
-        }
-        this.setState({timer: null});
-
-        if (!this.props.clearError) return;
-        this.props.clearError()
-    };
+    componentWillUnmount() {
+        $(this.modal).modal('hide');
+    }
 
     render() {
         const {message} = this.props;
-        if (message){
-            return (
-                <div className="modal is-active">
-                    <div onClick={this.clearError} className="modal-background"/>
-                    <div className="modal-content">
-                        <article className="message is-danger">
-                            <div className="message-header">
-                                <p>Ошибка!</p>
-                            </div>
-                            <div className="message-body">
-                                {message}
-                            </div>
-                        </article>
+        return (
+            <div ref={ref => {
+                this.modal = ref
+            }} className="modal fade show" id="error-modal">
+                <div className="modal-dialog">
+                    <div className="modal-body">
+                            <div className="alert alert-danger"><b>Ошибка!</b> {message}</div>
                     </div>
                 </div>
-            )
-        } else {
-            return null
-        }
+            </div>
+        )
 
     }
 }

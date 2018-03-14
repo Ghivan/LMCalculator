@@ -4,20 +4,21 @@ import {NavLink} from 'react-router-dom';
 
 const MenuItemWithDropdown = ({title, items, rootPath}) => {
     return (
-        <div className="navbar-item has-dropdown is-hoverable">
-            <NavLink className="navbar-link"
-                     activeClassName="is-active"
-                     to={rootPath}
+        <li className="nav-item dropdown">
+            <NavLink className="nav-link dropdown-toggle"
+               id={title}
+               data-toggle="dropdown"
+               aria-haspopup="true"
+               aria-expanded="false"
+               to={rootPath}
             >
                 {title}
             </NavLink>
-
-            <div className="navbar-dropdown">
+            <div className="dropdown-menu" aria-labelledby={title}>
                 {items.map(
                     (item, index) => {
                         return (
-                            <NavLink className="navbar-item"
-                                     activeClassName="is-active"
+                            <NavLink className="dropdown-item"
                                      to={item.path}
                                      key={index}
                             >
@@ -28,7 +29,7 @@ const MenuItemWithDropdown = ({title, items, rootPath}) => {
                 )
                 }
             </div>
-        </div>
+        </li>
     )
 };
 

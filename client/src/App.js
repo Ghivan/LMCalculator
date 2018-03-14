@@ -22,26 +22,17 @@ class App extends React.Component {
     render() {
         const {id} = this.props.player;
         const {error} = this.props;
-            return (
-                <div>
+        return (
+            <div className="container">
+                {error ?
                     <Modal>
                         <FloatError message={error}/>
-                    </Modal>
-                    <section className="hero is-primary">
-                        <div className="hero-body">
-                            <div className="container">
-                                <h1 className="title">
-                                    LM Calculator
-                                </h1>
-                                <h2 className="subtitle">
-                                    помощник для игры Lords Mobile
-                                </h2>
-                            </div>
-                        </div>
-                    </section>
-                    <AppRouter is_loggedIn={id !== ''} player={this.props.player}/>
-                </div>
-            )
+                    </Modal> :
+                    null
+                }
+                <AppRouter is_loggedIn={id !== ''} player={this.props.player} logout={this.props.logout}/>
+            </div>
+        )
     }
 }
 

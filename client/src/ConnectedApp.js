@@ -6,6 +6,7 @@ import LoginForm from './App';
 import PlayerActionCreator from "./redux/PlayerReducer/PlayerActionCreator";
 
 const ActionCreator = {
+    logout: PlayerActionCreator.logout,
     fetchDetails: PlayerActionCreator.fetchDetails
 };
 

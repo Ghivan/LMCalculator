@@ -1,48 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SpeedUpForm from "./Components/SpeedUpForm";
 import {SPEED_UPS_SOURCE_TYPES} from "../../../Global/Constants/speedups";
 import SpeedUpDisplayBox from "./Components/SpeedUpDisplayBox";
 
 class SpeedUpsScreen extends React.Component {
-    state = {
-        selectedSpeedUpType: ''
-    };
+    constructor(props) {
+        super(props);
+        const speedUpsTypes = Object.keys(SPEED_UPS_SOURCE_TYPES);
+        this.state = {
+            index: 0,
+            speedUpsTypes,
+            currentSpeedUpType: speedUpsTypes[0]
+        };
+    }
 
-    showEditForm = selectedSpeedUpType => {
+    nextSpeedUpType = () => {
+        const nextIndex = (this.state.index + 1 < this.state.speedUpsTypes.length) ? this.state.index + 1 : 0;
+        const nextSpeedUpType = this.state.speedUpsTypes[nextIndex];
         this.setState({
-            selectedSpeedUpType
+            index: nextIndex,
+            currentSpeedUpType: nextSpeedUpType
         })
     };
-
-    closeEditForm = () => {
+    previousSpeedUpType = () => {
+        const previousIndex = (this.state.index - 1 >= 0) ? this.state.index - 1 : this.state.speedUpsTypes.length - 1;
+        const previousSpeedUpType = this.state.speedUpsTypes[previousIndex];
         this.setState({
-            selectedSpeedUpType: ''
+            index: previousIndex,
+            currentSpeedUpType: previousSpeedUpType
         })
+
     };
 
     render() {
         return (
-            <div className="columns is-multiline">
-                {this.state.selectedSpeedUpType ?
-                    <SpeedUpForm type={this.state.selectedSpeedUpType || null}
-                                 speedUps={this.props.speedUps[this.state.selectedSpeedUpType] ? this.props.speedUps[this.state.selectedSpeedUpType].slice() : []}
-                                 closeModal={this.closeEditForm}
-                                 updateSpeedUps={this.props.updateSpeedUps}
-                    /> :
-                    null
-                }
-                <div className="column is-fullwidth">
-                    {Object.keys(SPEED_UPS_SOURCE_TYPES).map((speedUpType, index) => {
-                        return <SpeedUpDisplayBox type={speedUpType}
-                                                  speedUps={this.props.speedUps[speedUpType]}
-                                                  showEditForm={this.showEditForm}
-                                                  key={index}
-                        />
-                    })}
-                </div>
-            </div>
+            <SpeedUpDisplayBox type={this.state.currentSpeedUpType}
+                               updateSpeedUps={this.props.updateSpeedUps}
+                               speedUps={Array.isArray(this.props.speedUps[this.state.currentSpeedUpType]) ? this.props.speedUps[this.state.currentSpeedUpType].slice() : []}
+                               next={this.nextSpeedUpType}
+                               previous={this.previousSpeedUpType}
+            />
         )
     }
 }

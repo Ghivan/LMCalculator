@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 import MenuItemsList from "./MenuItemsList";
 import MenuItem from './Components/MenuItem';
@@ -12,27 +12,24 @@ class Menu extends React.Component {
     };
 
     render() {
-        const {is_loggedIn = false} = this.props;
+        const {is_loggedIn = false, logout} = this.props;
         const MenuItems = MenuItemsList.filter(item => item.is_loggedIn === is_loggedIn);
 
         return (
-            <div className="navbar is-info" role="navigation" aria-label="main navigation">
-                <div className="navbar-brand">
-                    <Link className="navbar-item" to="/">
-                        <img src="/img/Icon.png"
-                             alt="Lm Calculator"
-                             height="56"/>
-                    </Link>
-                    <div className={`navbar-burger burger ${this.state.is_active ? 'is-active' : ''}`}
-                         onClick={() => this.setState({is_active: !this.state.is_active})}
-                    >
-                        <span/>
-                        <span/>
-                        <span/>
-                    </div>
-                </div>
-                <div className={`navbar-menu ${this.state.is_active ? 'is-active' : ''}`}>
-                    <div className="navbar-start">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <Link className="navbar-brand" to="/">
+                    <img src="/img/Icon.png" width="60" height="60"
+                         className="d-inline-block align-top m-1" alt="App icon"/>
+                </Link>
+
+                <button className="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#main-navbar"
+                >
+                    <span className="navbar-toggler-icon"/>
+                </button>
+
+                <div className="collapse navbar-collapse" id="main-navbar">
+                    <ul className="navbar-nav mr-auto">
                         {
                             MenuItems.map(
                                 (item, index) => {
@@ -52,18 +49,28 @@ class Menu extends React.Component {
                                 }
                             )
                         }
-                    </div>
-                    <div className="navbar-end"/>
+                    </ul>
+                    <span className="navbar-text">
+                            <a className="nav-link text-danger"
+                               href="#"
+                               onClick={e => {
+                                   e.preventDefault();
+                                   logout();
+                               }}>
+                                Выйти из профиля <span className="fa fa-times-circle"/>
+                            </a>
+                    </span>
                 </div>
-            </div>
+            </nav>
         )
     }
 }
 
 Menu.propTypes = {
     is_admin: PropTypes.bool,
-    is_loggedIn: PropTypes.bool
+    is_loggedIn: PropTypes.bool,
+    logout: PropTypes.func
 };
 
-export default Menu;
+export default withRouter(Menu);
 

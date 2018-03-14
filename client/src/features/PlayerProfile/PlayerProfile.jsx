@@ -47,7 +47,6 @@ class PlayerProfile extends React.Component {
 
     render() {
         const {details} = this.props.player;
-        const {logout} = this.props;
 
         if (isEmpty(details)) return (
             <div className="section">
@@ -56,31 +55,22 @@ class PlayerProfile extends React.Component {
         );
 
         return (
-            <div className="box is-radiusless">
-
-                <div className="columns is-multiline">
-                    <div className="column is-one-fifth-desktop is-one-third-tablet is-full-mobile">
-                        <div className="section">
-                            <figure className="image">
-                                <img src={`${details.avatar}`}
-                                     alt="Аватар игрока"/>
-                            </figure>
-                            <div className="buttons  is-centered">
-                                <button className="button is-danger"
-                                        onClick={e => {
-                                            e.preventDefault();
-                                            logout();
-                                        }}
-                                >
-                                    Выйти из профиля
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="column is-four-fifth-desktop is-two-third-tablet is-full-mobile">
+            <div className="row">
+                <div className="col-md-3 p-3">
+                    <figure className="figure">
+                        <img className="img-fluid"
+                             src={`${details.avatar}`}
+                             alt="Аватар игрока"/>
+                        <figcaption className="figure-caption"><b>{details.nickname}</b></figcaption>
+                    </figure>
+                </div>
+                <div className="col-md-9 p-3">
+                    <div className="row">
                         <PlayerProfileMenu setScreen={this.setScreen}
                                            activeScreen={this.state.currentScreen}
                         />
+                    </div>
+                    <div className="row p-3 border-left border-right">
                         {this.renderScreen(this.state.currentScreen)}
                     </div>
                 </div>
@@ -90,7 +80,6 @@ class PlayerProfile extends React.Component {
 }
 
 PlayerProfile.propTypes = {
-    logout: PropTypes.func,
     updateSpeedUps: PropTypes.func,
     updateStats: PropTypes.func,
     player: PropTypes.shape({

@@ -50,38 +50,29 @@ class InputField extends React.Component {
         } = this.props;
 
         return (
-            <div className="field">
+            <div className={`input-group input-group-sm ${error || this.state.isChanged ? 'mb-1' : 'mb-3'}`}>
                 {label
                     ? <label className="label">{label}</label>
                     : null
                 }
-
-                <div className="field has-addons">
-                    <div className="control">
-                        <a className="button is-static">
-                            {addon}
-                        </a>
-                    </div>
-                    <div className="control">
-                        <input className={`input ${this.state.isChanged ? 'is-warning' : ''} ${error ? 'is-danger' : ''}`}
-                               type={type}
-                               name={name || null}
-                               value={this.state.inputValue}
-                               onChange={this.onInputChange}
-                               onBlur={this.onInputBlur}
-                               onFocus={this.onInputFocus}
-                        />
-                        <p className="help is-danger">
-                            {error}
-                        </p>
-                        <p className="help is-warning">
-                            {this.state.isChanged && !error ? 'Значение изменено' : ''}
-                        </p>
-                    </div>
+                <div className="input-group-prepend">
+                    <span className="input-group-text" id={label}>{addon}</span>
                 </div>
-
+                <input className={`input form-control ${this.state.isChanged && !error ? 'is-valid' : ''} ${error ? 'is-invalid' : ''}`}
+                       type={type}
+                       name={name || null}
+                       value={this.state.inputValue}
+                       onChange={this.onInputChange}
+                       onBlur={this.onInputBlur}
+                       onFocus={this.onInputFocus}
+                />
+                <div className="invalid-feedback">
+                    {error}
+                </div>
+                <div className="valid-feedback">
+                    {this.state.isChanged && !error ? <i>Сохраните изменения</i> : ''}
+                </div>
             </div>
-
         );
     }
 }

@@ -47,14 +47,15 @@ const renderUnauthorizedRoutes = () => {
 const AppRouter = (
     {
         is_loggedIn = false,
-        player
+        player,
+        logout
     }
 ) => {
 
     return (
         <Router>
             <div>
-                <Menu is_loggedIn={is_loggedIn}/>
+                {is_loggedIn ? <Menu is_loggedIn={is_loggedIn} logout={logout}/> : null}
                 {is_loggedIn ? renderAuthorizedRoutes(player) : renderUnauthorizedRoutes()}
             </div>
         </Router>
@@ -63,7 +64,8 @@ const AppRouter = (
 
 AppRouter.propTypes = {
     is_admin: PropTypes.bool,
-    is_loggedIn: PropTypes.bool
+    is_loggedIn: PropTypes.bool,
+    logout: PropTypes.func
 };
 
 export default AppRouter;

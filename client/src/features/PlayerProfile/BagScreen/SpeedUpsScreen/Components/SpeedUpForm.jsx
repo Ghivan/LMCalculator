@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-
-import {SPEED_UPS_SOURCE_TYPES} from "../../../../Global/Constants/speedups";
 import SpeedUpFormColumns from "./SpeedUpFormColumns";
-
-import Modal from "../../../../Modal/Modal";
 import Notification from "../../../Notification/Notification";
 
 class SpeedUpForm extends React.Component {
@@ -18,24 +14,6 @@ class SpeedUpForm extends React.Component {
         },
         timers: []
     };
-
-    componentWillReceiveProps(nextProps){
-        if(!isEqual(nextProps.speedUps, this.props.speedUps)){
-            this.setNotification('Изменения сохранены', 'success');
-            this.setState({
-                speedUps: nextProps.speedUps.slice(),
-                shouldResetInputs: true,
-                errors: {}
-            }, () => this.setState({
-                shouldResetInputs: false
-            }));
-        }
-    }
-
-    componentWillUnmount(){
-        this.state.timers.map(timer => clearTimeout(timer))
-    }
-
     resetState = () => {
         this.setNotification('Изменения сброшены', 'warning');
         this.setState({
@@ -46,7 +24,6 @@ class SpeedUpForm extends React.Component {
             shouldResetInputs: false
         }))
     };
-
     onInputChange = (element) => {
         const value = Number(element.value);
         const name = element.name;
@@ -75,12 +52,10 @@ class SpeedUpForm extends React.Component {
         })
 
     };
-
     updateSpeedUps = () => {
         if (this.hasErrors()) return;
         this.props.updateSpeedUps(this.props.type, this.state.speedUps);
     };
-
     setError = (field, message) => {
         this.setState({
             errors: {
@@ -89,7 +64,6 @@ class SpeedUpForm extends React.Component {
             }
         })
     };
-
     clearError = field => {
         this.setState({
             errors: {
@@ -98,7 +72,6 @@ class SpeedUpForm extends React.Component {
             }
         })
     };
-
     hasErrors = () => {
         const errors = Object.values(this.state.errors);
         for (let i = 0; i < errors.length; i++) {
@@ -108,7 +81,6 @@ class SpeedUpForm extends React.Component {
         }
         return false;
     };
-
     setNotification = (message, type = 'info') => {
         this.setState({
             notification: {
@@ -124,7 +96,6 @@ class SpeedUpForm extends React.Component {
         );
         this.state.timers.push(timer);
     };
-
     clearNotification = () => {
         this.setState({
             notification: {
@@ -134,64 +105,72 @@ class SpeedUpForm extends React.Component {
         })
     };
 
+    componentWillReceiveProps(nextProps) {
+        if (!isEqual(nextProps.speedUps, this.props.speedUps)) {
+            this.setNotification('Изменения сохранены', 'success');
+            this.setState({
+                speedUps: nextProps.speedUps.slice(),
+                shouldResetInputs: true,
+                errors: {}
+            }, () => this.setState({
+                shouldResetInputs: false
+            }));
+        }
+    }
+
+    componentWillUnmount() {
+        this.state.timers.map(timer => clearTimeout(timer))
+    }
+
     render() {
         const {
-            closeModal
+            close
         } = this.props;
-        const type = this.props.type || 'universal';
         return (
-            <div className="modal is-active">
-                <Modal>
+            <div>
+                {this.state.notification.message ?
                     <Notification message={this.state.notification.message}
                                   type={this.state.notification.type}
                                   clearMessage={this.clearNotification}
+                    /> :
+                    null
+                }
+
+                <div className="row">
+                    <SpeedUpFormColumns speedUps={this.props.speedUps}
+                                        onChange={this.onInputChange}
+                                        errors={this.state.errors}
+                                        shouldResetInputs={this.state.shouldResetInputs}
                     />
-                </Modal>
-                <div className="modal-background"/>
-                <div className="modal-content">
-                    <div className="section box ">
-                        <div className="columns is-multiline is-centered">
-                            <h3>{SPEED_UPS_SOURCE_TYPES[type].label}</h3>
-                        </div>
-                        <div className="columns is-multiline is-centered is-vertical">
-                            <SpeedUpFormColumns speedUps={this.props.speedUps}
-                                                onChange={this.onInputChange}
-                                                errors={this.state.errors}
-                                                shouldResetInputs={this.state.shouldResetInputs}
-                            />
-                        </div>
-                        <div className="columns">
-                            <div className="column is-fullwidth ">
-                                <div className="buttons  is-centered">
-                                    <button className="button is-danger"
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                closeModal();
-                                            }}
-                                    >
-                                        Назад
-                                    </button>
-                                    <button className="button is-warning"
-                                            disabled={isEqual(this.state.speedUps, this.props.speedUps) ? 'is-disabled' : ''}
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                this.resetState()
-                                            }}
-                                    >
-                                        Сбросить
-                                    </button>
-                                    <button className="button is-success"
-                                            disabled={isEqual(this.state.speedUps, this.props.speedUps) || this.hasErrors() ? 'is-disabled' : ''}
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                this.updateSpeedUps();
-                                            }}
-                                    >
-                                        Сохранить
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                </div>
+                <div className="row">
+                    <div className="btn btn-group btn-group-sm m-auto">
+                        <button className="btn btn-danger"
+                                onClick={e => {
+                                    e.preventDefault();
+                                    close();
+                                }}
+                        >
+                            Назад
+                        </button>
+                        <button className="btn btn-warning"
+                                disabled={isEqual(this.state.speedUps, this.props.speedUps) ? 'is-disabled' : ''}
+                                onClick={e => {
+                                    e.preventDefault();
+                                    this.resetState()
+                                }}
+                        >
+                            Сбросить
+                        </button>
+                        <button className="btn btn-success"
+                                disabled={isEqual(this.state.speedUps, this.props.speedUps) || this.hasErrors() ? 'is-disabled' : ''}
+                                onClick={e => {
+                                    e.preventDefault();
+                                    this.updateSpeedUps();
+                                }}
+                        >
+                            Сохранить
+                        </button>
                     </div>
                 </div>
             </div>
@@ -200,10 +179,10 @@ class SpeedUpForm extends React.Component {
 }
 
 SpeedUpForm.propTypes = {
-    closeModal: PropTypes.func,
+    close: PropTypes.func,
     speedUps: PropTypes.array,
     type: PropTypes.string,
     updateSpeedUps: PropTypes.func.isRequired
 };
 
-export default SpeedUpForm
+export default SpeedUpForm;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import SpeedUpsScreen from "./SpeedUpsScreen/SpeedUpsScreen";
-import Dropdown from "../../Global/Components/DropDown/Dropdown";
+import Dropdown from "./DropDown/Dropdown";
 
 import {BAG_SCREENS} from "./constants/screens";
 
@@ -42,11 +42,13 @@ class BagScreen extends React.Component {
     render() {
 
         return (
-            <div>
-                <Dropdown items={Object.values(BAG_SCREENS)}
-                          label={this.state.currentScreen.label}
-                          onItemClick={this.setScreen}
-                />
+            <div className="container">
+                <div className="row p-2 justify-content-center">
+                    <Dropdown items={Object.values(BAG_SCREENS)}
+                              label={this.state.currentScreen.label}
+                              onItemClick={this.setScreen}
+                    />
+                </div>
                 {this.renderScreen(this.state.currentScreen)}
             </div>
 

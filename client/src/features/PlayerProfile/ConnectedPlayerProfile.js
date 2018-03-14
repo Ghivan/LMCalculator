@@ -6,7 +6,6 @@ import PlayerActionCreator from '../../redux/PlayerReducer/PlayerActionCreator';
 import PlayerProfile from './PlayerProfile';
 
 const ActionCreator = {
-    logout: PlayerActionCreator.logout,
     updateStats: PlayerActionCreator.updateStats,
     updateSpeedUps: PlayerActionCreator.updateSpeedUps
 };

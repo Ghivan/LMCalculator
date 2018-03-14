@@ -25,7 +25,7 @@ const SpeedUpFormColumns = ({
     return (
         columns.map((column, index) => {
             return (
-                <div className="column"
+                <div className="col-sm-12 col-md-6"
                      key={index}
                 >
                     {column.map((item, index) => {
@@ -47,7 +47,7 @@ const SpeedUpFormColumns = ({
     )
 };
 
-SpeedUpDisplayBox.propTypes = {
+SpeedUpFormColumns.propTypes = {
     speedUps: PropTypes.array,
     errors: PropTypes.object,
     shouldResetInputs: PropTypes.bool,

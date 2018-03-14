@@ -1,31 +1,61 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import $ from "jquery";
 
-const Notification = ({
-                          type = 'info',
-                          message,
-                          clearMessage
-                      }) => {
-    if (message) {
-        return (
-            <div className="modal is-active">
-                <div onClick={clearMessage ? clearMessage : null} className="modal-background"/>
-                <div className="modal-content">
-                    <div className={`notification is-${type}`}>
-                        {message}
+class Notification extends React.Component {
+    state = {
+        timer: null,
+    };
+
+    componentDidMount() {
+        $(this.modal).modal('show');
+    }
+
+    componentWillUnmount() {
+        $(this.modal).modal('hide');
+    }
+
+
+    render() {
+        const {
+            type = 'info',
+            message,
+            clearMessage
+        } = this.props;
+
+        if (message) {
+            return (
+                <div ref={ref => {
+                    this.modal = ref
+                }} className="modal fade show" id="error-modal">
+                    <div className="modal-dialog">
+                        <div className="modal-body">
+                            <div className={`alert alert-${type} alert-dismissible fade show`} role="alert">
+                                {message}
+                                <button type="button" className="close"
+                                        onClick={e => {
+                                            e.preventDefault();
+                                            clearMessage();
+                                        }
+                                        }
+                                >
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        )
-    } else {
-        return null
-    }
-};
+            )
+        } else {
+            return null
+        }
+    };
+}
 
 Notification.propTypes = {
     type: PropTypes.string,
     message: PropTypes.string,
-    clearMessage: PropTypes.func
+    clearMessage: PropTypes.func,
 };
 
 export default Notification;

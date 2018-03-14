@@ -4,12 +4,10 @@ import {NavLink} from 'react-router-dom';
 
 const MenuItem = ({title, path}) => {
     return (
-        <NavLink className="navbar-item"
-                 to={path}
-                 activeClassName='is-active'
-        >
-            {title}
-        </NavLink>
+        <li className="nav-item">
+            <NavLink className="nav-link" to={path}>{title}<span className="sr-only">(current)</span>
+            </NavLink>
+        </li>
     )
 };
 
