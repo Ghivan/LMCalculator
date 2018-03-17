@@ -6,17 +6,17 @@ import {getFormattedTime, getRightWordForm} from "../../Functions/general";
 const TimeDisplay = ({seconds = 0, title = '', color = 'warning'}) => {
     const formattedTime = getFormattedTime(seconds);
     return (
-        <article className={`message is-${color}`}>
-            <div className="message-header">
-                <p>{title}</p>
+        <div className={`alert alert-${color} w-100 m-auto`}>
+            <div className="h6">
+                {title}
             </div>
-            <div className="message-body has-text-centered">
+            <div>
                 <span><b>{formattedTime.days}</b> {getRightWordForm(formattedTime.days).days}</span>
                 <span> <b>{formattedTime.hours}</b> {getRightWordForm(formattedTime.hours).hours}</span>
                 <span> <b>{formattedTime.minutes}</b> {getRightWordForm(formattedTime.minutes).minutes}</span>
                 <span> <b>{formattedTime.seconds}</b> {getRightWordForm(formattedTime.seconds).seconds}</span>
             </div>
-        </article>
+        </div>
     )
 };
 

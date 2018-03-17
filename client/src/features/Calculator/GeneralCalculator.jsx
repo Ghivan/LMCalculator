@@ -1,9 +1,9 @@
 import React from 'react';
 
 import {countTimeWithHelp, countTimeWithSpeedBonus} from "../Global/Functions/time";
-import TimeDisplay from "../Global/Components/Time/TimeDisplay";
-import CalculatorInputField from "../Global/Components/Calculator/CalculatorInputField";
 import TimeForm from "../Global/Components/Time/TimeForm";
+import CalculatorInputField from "../Global/Components/Calculator/CalculatorInputField";
+import TimeDisplay from "../Global/Components/Time/TimeDisplay";
 
 const FIELD_NAMES = {
     HELP_QUANTITY: 'helpQuantity',
@@ -101,67 +101,56 @@ class GeneralCalculator extends React.Component {
         const timeWithSpeedBonus = countTimeWithSpeedBonus(this.state.seconds, this.state[FIELD_NAMES.SPEED_BONUS]);
         const timeWithHelp = countTimeWithHelp(timeWithSpeedBonus, this.state[FIELD_NAMES.HELP_QUANTITY]);
         return (
-            <div className="columns">
-                <div className="column">
-                    <h2 className="is-size-2 has-text-centered">Исходное время</h2>
-                    <TimeForm seconds={this.state.seconds}
-                              onTimeChange={this.setSeconds}
-                    />
-                    <div className="columns is-centered">
-                        <div className="column is-half">
-                            <div className="card">
-                                <header className="card-header">
-                                    <p className="card-header-title is-centered">
-                                        Бонус скорости
-                                    </p>
-                                </header>
-                                <div className="card-content ">
-                                    <div className="content  has-text-centered">
-                                        <CalculatorInputField name={FIELD_NAMES.SPEED_BONUS}
-                                                              defaultValue={this.state[FIELD_NAMES.SPEED_BONUS]}
-                                                              error={this.state.errors[FIELD_NAMES.SPEED_BONUS]}
-                                                              onChange={this.onInputChange}
-                                                              onBlur={this.onInputBlur}
-                                                              icon="fa-fast-forward"
-                                        />
-                                    </div>
+            <div className="row">
+                <TimeForm seconds={this.state.seconds}
+                          onTimeChange={this.setSeconds}
+                />
+                <div className="col-12">
+                    <div className="row p-2">
+                        <div className="col-sm-12 col-md-6 mb-2">
+                            <div className="card m-auto">
+                                <div className="card-header text-center">
+                                    Бонус скорости
+                                </div>
+                                <div className="card-body">
+                                    <CalculatorInputField name={FIELD_NAMES.SPEED_BONUS}
+                                                          defaultValue={this.state[FIELD_NAMES.SPEED_BONUS]}
+                                                          error={this.state.errors[FIELD_NAMES.SPEED_BONUS]}
+                                                          onChange={this.onInputChange}
+                                                          onBlur={this.onInputBlur}
+                                                          icon="fa-fast-forward"
+                                    />
                                 </div>
                             </div>
                         </div>
 
-                        <div className="column is-half">
-                            <div className="card">
-                                <header className="card-header">
-                                    <p className="card-header-title is-centered">
-                                        Количество помощи
-                                    </p>
-                                </header>
-                                <div className="card-content">
-                                    <div className="content  has-text-centered">
-                                        <CalculatorInputField name={FIELD_NAMES.HELP_QUANTITY}
-                                                              defaultValue={this.state[FIELD_NAMES.HELP_QUANTITY]}
-                                                              error={this.state.errors[FIELD_NAMES.HELP_QUANTITY]}
-                                                              onChange={this.onInputChange}
-                                                              onBlur={this.onInputBlur}
-                                                              icon="fa-handshake"
-                                        />
-                                    </div>
+                        <div className="col-sm-12 col-md-6 mb-2">
+                            <div className="card m-auto">
+                                <div className="card-header text-center">
+                                    Количество помощи
+                                </div>
+                                <div className="card-body">
+                                    <CalculatorInputField name={FIELD_NAMES.HELP_QUANTITY}
+                                                          defaultValue={this.state[FIELD_NAMES.HELP_QUANTITY]}
+                                                          error={this.state.errors[FIELD_NAMES.HELP_QUANTITY]}
+                                                          onChange={this.onInputChange}
+                                                          onBlur={this.onInputBlur}
+                                                          icon="fa-handshake"
+                                    />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="column">
-                    <h2 className="is-size-2 has-text-centered">Расчетное время</h2>
-
-                    <div className="columns is-multiline">
-                        <div className="column is-half-desktop is-12-tablet">
+                <div className="col-12 mb-2">
+                    <div className="row p-2">
+                        <div className="col-sm-12 col-md-6 mb-2">
                             <TimeDisplay title='Фактическое время:'
                                          seconds={timeWithSpeedBonus}
                                          color="info"
                             />
                         </div>
-                        <div className="column is-half-desktop is-12-tablet">
+                        <div className="col-sm-12 col-md-6 mb-2">
                             <TimeDisplay title='Время после помощи:'
                                          seconds={timeWithHelp}
                                          color="success"

@@ -16,41 +16,42 @@ class Menu extends React.Component {
         const MenuItems = MenuItemsList.filter(item => item.is_loggedIn === is_loggedIn);
 
         return (
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <Link className="navbar-brand" to="/">
-                    <img src="/img/Icon.png" width="60" height="60"
-                         className="d-inline-block align-top m-1" alt="App icon"/>
-                </Link>
+            <div className="row">
+                <nav className="navbar navbar-expand-md w-100 navbar-light bg-light">
+                    <Link className="navbar-brand" to="/">
+                        <img src="/img/Icon.png" width="60" height="60"
+                             className="d-inline-block align-top m-1" alt="App icon"/>
+                    </Link>
 
-                <button className="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#main-navbar"
-                >
-                    <span className="navbar-toggler-icon"/>
-                </button>
+                    <button className="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#main-navbar"
+                    >
+                        <span className="navbar-toggler-icon"/>
+                    </button>
 
-                <div className="collapse navbar-collapse" id="main-navbar">
-                    <ul className="navbar-nav mr-auto">
-                        {
-                            MenuItems.map(
-                                (item, index) => {
-                                    if (item.has_dropdown) {
-                                        return <MenuItemWithDropdown title={item.title}
-                                                                     items={item.items}
-                                                                     rootPath={item.rootPath}
-                                                                     key={index}
+                    <div className="collapse navbar-collapse" id="main-navbar">
+                        <ul className="navbar-nav mr-auto">
+                            {
+                                MenuItems.map(
+                                    (item, index) => {
+                                        if (item.has_dropdown) {
+                                            return <MenuItemWithDropdown title={item.title}
+                                                                         items={item.items}
+                                                                         rootPath={item.rootPath}
+                                                                         key={index}
 
-                                        />
-                                    } else {
-                                        return <MenuItem title={item.title}
-                                                         path={item.path}
-                                                         key={index}
-                                        />
+                                            />
+                                        } else {
+                                            return <MenuItem title={item.title}
+                                                             path={item.path}
+                                                             key={index}
+                                            />
+                                        }
                                     }
-                                }
-                            )
-                        }
-                    </ul>
-                    <span className="navbar-text">
+                                )
+                            }
+                        </ul>
+                        <span className="navbar-text">
                             <a className="nav-link text-danger"
                                href="#"
                                onClick={e => {
@@ -60,8 +61,9 @@ class Menu extends React.Component {
                                 Выйти из профиля <span className="fa fa-times-circle"/>
                             </a>
                     </span>
-                </div>
-            </nav>
+                    </div>
+                </nav>
+            </div>
         )
     }
 }

@@ -34,32 +34,35 @@ class CalculatorInputField extends React.Component {
             name,
             error,
             label = '',
-            icon='fa-clock'
+            icon = 'fa-clock'
         } = this.props;
         const is_narrow = window.innerWidth <= 768;
 
         return (
-            <div className="field">
+            <div className={`input-group input-group-sm ${error || this.state.isChanged ? 'mb-1' : 'mb-3'}`}>
                 {label
                     ? <label className="label">{label}</label>
                     : null
                 }
-                <div className={`control ${!is_narrow ? 'has-icons-left' : ''}`}>
-                    <input className={`input ${error ? 'is-danger' : ''}  is-small`}
-                           type={type}
-                           name={name || null}
-                           value={this.state.inputValue}
-                           onChange={this.onInputChange}
-                           onBlur={this.onInputBlur}
-                           onFocus={this.onInputFocus}
-                    />
-                    <span className="icon is-small is-left is-hidden-mobile">
+
+                <div className="input-group-prepend d-none d-md-flex">
+                    <span className="input-group-text" id={label}>
                         <i className={`fas ${icon}`}/>
                     </span>
                 </div>
-                <p className="help is-danger">
+
+                <input className={`input form-control ${error ? 'is-invalid' : ''}`}
+                       type={type}
+                       name={name || null}
+                       value={this.state.inputValue}
+                       onChange={this.onInputChange}
+                       onBlur={this.onInputBlur}
+                       onFocus={this.onInputFocus}
+                />
+
+                <div className="invalid-feedback">
                     {error}
-                </p>
+                </div>
             </div>
         );
     }
