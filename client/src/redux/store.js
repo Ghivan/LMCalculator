@@ -7,13 +7,16 @@ import PlayersAPI from '../api/PlayersApi';
 
 import ErrorReducer from './ErrorReducer/ErrorReducer';
 import PlayerReducer from './PlayerReducer/PlayerReducer';
+import LoaderReducer from './LoaderReducer/LoaderReducer';
 
 import PlayerActionCreator from './PlayerReducer/PlayerActionCreator';
 import ErrorActionCreator from "./ErrorReducer/ErrorActionCreator";
+import LoaderActionCreator from "./LoaderReducer/LoaderActionCreator";
 
 const CombinedReducer = combineReducers({
     error: ErrorReducer,
-    player: PlayerReducer
+    player: PlayerReducer,
+    loader: LoaderReducer
 });
 
 const ErrorService = {
@@ -25,11 +28,21 @@ const ErrorService = {
     }
 };
 
+const LoaderService = {
+    setLoader: message => {
+        return LoaderActionCreator.setLoader()(store.dispatch)
+    },
+    removeLoader: () => {
+        return LoaderActionCreator.removeLoader()(store.dispatch);
+    }
+};
+
 
 const storeServices = {
     auth: AuthAPI,
     players: PlayersAPI,
-    error: ErrorService
+    error: ErrorService,
+    loader: LoaderService
 };
 
 const store = createStore(CombinedReducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(storeServices))));
