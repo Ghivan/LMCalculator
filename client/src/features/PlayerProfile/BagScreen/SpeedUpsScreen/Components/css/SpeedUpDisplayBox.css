@@ -1,0 +1,16 @@
+@keyframes pulse {
+  0% {
+    transform: scale(1); }
+  50% {
+    transform: scale(1.1); }
+  100% {
+    transform: scale(1); } }
+.btn-switch {
+  background-color: #ff7117;
+  color: white;
+  animation: pulse 2s infinite; }
+  .btn-switch:focus {
+    outline: 0;
+    box-shadow: none; }
+
+/*# sourceMappingURL=SpeedUpDisplayBox.css.map */

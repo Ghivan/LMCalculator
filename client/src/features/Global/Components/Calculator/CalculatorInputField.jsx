@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 class CalculatorInputField extends React.Component {
     state = {
-        inputValue: this.props.defaultValue || 0,
-        initialValue: this.props.defaultValue|| 0
+        inputValue: this.props.defaultValue || '',
+        initialValue: this.props.defaultValue|| ''
     };
 
     componentWillReceiveProps(nextProps) {
@@ -53,19 +53,20 @@ class CalculatorInputField extends React.Component {
             error,
             label = '',
             icon = 'fa-clock',
-            showResetBtn = false
+            showResetBtn = false,
+            prependText = ''
         } = this.props;
 
         return (
             <div className={`input-group input-group-sm ${error || this.state.isChanged ? 'mb-1' : 'mb-3'}`}>
                 {label
-                    ? <label className="label">{label}</label>
+                    ? <label className="label col-form-label">{label}</label>
                     : null
                 }
 
                 <div className="input-group-prepend d-none d-md-flex">
                     <span className="input-group-text" id={label}>
-                        <i className={`fas ${icon}`}/>
+                        {prependText ? prependText : <i className={`fas ${icon}`}/>}
                     </span>
                 </div>
 
@@ -124,7 +125,8 @@ CalculatorInputField.propTypes = {
     onFocus: PropTypes.func,
     icon: PropTypes.string,
     shouldReset: PropTypes.bool,
-    showResetBtn: PropTypes.bool
+    showResetBtn: PropTypes.bool,
+    prependText: PropTypes.string
 };
 
 export default CalculatorInputField;

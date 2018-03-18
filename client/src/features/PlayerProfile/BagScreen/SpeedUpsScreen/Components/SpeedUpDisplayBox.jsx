@@ -6,6 +6,8 @@ import {getFormattedNumberOutput, getFormattedTime, getRightWordForm} from "../.
 import SpeedUpsVitrine from "./SpeedUpsVitrine";
 import SpeedUpForm from "./SpeedUpForm";
 
+import './css/SpeedUpDisplayBox.css';
+
 class SpeedUpDisplayBox extends React.Component {
     state = {
         editMode: false
@@ -33,10 +35,10 @@ class SpeedUpDisplayBox extends React.Component {
         return (
             <div className="card text-center m-2">
                 <div className="card-header">
-                    <div className="d-flex justify-content-around align-items-center flex-nowrap">
+                    <div className="d-flex justify-content-between align-items-center flex-nowrap">
                         {
                             !this.state.editMode ?
-                                <button className="btn btn-info"
+                                <button className="btn btn-switch"
                                         disabled={this.state.editMode}
                                         onClick={() => {
                                             previous()
@@ -49,7 +51,7 @@ class SpeedUpDisplayBox extends React.Component {
                         <p className="text-center font-weight-bold align-middle p-1 m-0">{SPEED_UPS_SOURCE_TYPES[type].label}</p>
                         {
                             !this.state.editMode ?
-                                <button className="btn btn-info"
+                                <button className="btn btn-switch"
                                         onClick={() => next()}
                                 >
                                     <i className="fas fa-arrow-alt-circle-right"/>

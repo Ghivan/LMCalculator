@@ -159,23 +159,15 @@ class TroopsCalculator extends React.Component {
                     <div className="h3">Калькулятор войск (тренировка)</div>
                 </div>
 
-                <div className="col-12">
-                    <div className="row p-2">
-                        <div className="card m-auto">
-                            <div className="card-header text-center">
-                                Бонус скорости тренировки
-                            </div>
-                            <div className="card-body">
-                                <CalculatorInputField name={FIELD_NAMES.SPEED_BONUS}
-                                                      defaultValue={this.state[FIELD_NAMES.SPEED_BONUS]}
-                                                      error={this.state.errors[FIELD_NAMES.SPEED_BONUS]}
-                                                      onChange={this.onInputChange}
-                                                      onBlur={this.onInputBlur}
-                                                      icon="fa-fast-forward"
-                                />
-                            </div>
-                        </div>
-                    </div>
+                <div className="col-6 mr-auto ml-auto">
+                    <CalculatorInputField name={FIELD_NAMES.SPEED_BONUS}
+                                          defaultValue={this.state[FIELD_NAMES.SPEED_BONUS]}
+                                          error={this.state.errors[FIELD_NAMES.SPEED_BONUS]}
+                                          onChange={this.onInputChange}
+                                          onBlur={this.onInputBlur}
+                                          icon="fa-fast-forward"
+                                          prependText="Бонус скорости тренировки:"
+                    />
                 </div>
 
                 <div className="col-12">
