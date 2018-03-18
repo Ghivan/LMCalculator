@@ -6,6 +6,14 @@ class CalculatorInputField extends React.Component {
         inputValue: this.props.defaultValue || 0
     };
 
+    componentWillReceiveProps(nextProps){
+        if(nextProps.shouldReset){
+            this.setState({
+                inputValue: nextProps.defaultValue || 0
+            });
+        }
+    }
+
     onInputChange = e => {
         this.setState({
             inputValue: e.target.value
@@ -76,7 +84,8 @@ CalculatorInputField.propTypes = {
     onChange: PropTypes.func,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
-    icon: PropTypes.string
+    icon: PropTypes.string,
+    shouldReset: PropTypes.bool
 };
 
 export default CalculatorInputField;

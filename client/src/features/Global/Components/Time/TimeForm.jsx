@@ -84,6 +84,9 @@ class TimeForm extends React.Component {
     render() {
         return (
             <div className="col-12">
+                <div className="row">
+                    <div className="h4 w-100">Исходное время</div>
+                </div>
                 <div className="row p-2">
                     <div className="col-sm-6 col-md-3 mb-2">
                         <div className="card m-auto">
