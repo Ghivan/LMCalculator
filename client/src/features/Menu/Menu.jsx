@@ -57,7 +57,7 @@ class Menu extends React.Component {
                                         e.preventDefault();
                                         logout();
                                     }}>
-                                Выйти из профиля <span className="fa fa-times-circle"/>
+                                Выйти из профиля
                             </button>
                     </span>
                     </div>
