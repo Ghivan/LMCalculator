@@ -157,6 +157,7 @@ class GeneralCalculator extends React.Component {
                                                           onChange={this.onInputChange}
                                                           onBlur={this.onInputBlur}
                                                           icon="fa-fast-forward"
+                                                          showResetBtn={true}
                                     />
                                 </div>
                             </div>

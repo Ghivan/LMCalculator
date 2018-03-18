@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 
 class CalculatorInputField extends React.Component {
     state = {
-        inputValue: this.props.defaultValue || 0
+        inputValue: this.props.defaultValue || 0,
+        initialValue: this.props.defaultValue|| 0
     };
 
-    componentWillReceiveProps(nextProps){
-        if(nextProps.shouldReset){
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.shouldReset) {
             this.setState({
-                inputValue: nextProps.defaultValue || 0
+                inputValue: nextProps.defaultValue || 0,
+                initialValue: nextProps.defaultValue || 0
             });
         }
     }
@@ -36,13 +38,22 @@ class CalculatorInputField extends React.Component {
         if (this.props.onFocus) this.props.onFocus(e.target);
     };
 
+    resetValue = () => {
+        this.setState({
+            inputValue: this.state.initialValue
+        }, () => {
+            if (this.props.onChange) this.props.onChange(this.ref);
+        });
+    };
+
     render() {
         const {
             type = 'text',
             name,
             error,
             label = '',
-            icon = 'fa-clock'
+            icon = 'fa-clock',
+            showResetBtn = false
         } = this.props;
 
         return (
@@ -59,6 +70,7 @@ class CalculatorInputField extends React.Component {
                 </div>
 
                 <input className={`input form-control ${error ? 'is-invalid' : ''}`}
+                       ref={ref => this.ref = ref}
                        type={type}
                        name={name || null}
                        value={this.state.inputValue}
@@ -66,11 +78,11 @@ class CalculatorInputField extends React.Component {
                        onBlur={this.onInputBlur}
                        onFocus={this.onInputFocus}
                        onKeyPress={e => {
-                           if (e.which === 13){
+                           if (e.which === 13) {
                                if (error) return;
                                const inputs = document.getElementsByTagName('input');
                                const currentInputIndex = Array.prototype.findIndex.call(inputs, input => document.activeElement.name === input.name);
-                               if (inputs[currentInputIndex + 1]) {
+                               if (currentInputIndex !== -1 && inputs[currentInputIndex + 1]) {
                                    inputs[currentInputIndex + 1].focus();
                                } else {
                                    document.activeElement.blur();
@@ -78,6 +90,20 @@ class CalculatorInputField extends React.Component {
                            }
                        }}
                 />
+
+                {
+                    showResetBtn ?
+                        <div className="input-group-append">
+                            <button className="btn btn-warning"
+                                    tabIndex="-1"
+                                    onClick={this.resetValue}
+                                    title="Вернуть исходное значение"
+                            >
+                                <i className="fas fa-window-restore"/>
+                            </button>
+                        </div> :
+                        null
+                }
 
                 <div className="invalid-feedback">
                     {error}
@@ -97,7 +123,8 @@ CalculatorInputField.propTypes = {
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
     icon: PropTypes.string,
-    shouldReset: PropTypes.bool
+    shouldReset: PropTypes.bool,
+    showResetBtn: PropTypes.bool
 };
 
 export default CalculatorInputField;
