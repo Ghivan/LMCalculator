@@ -19,7 +19,6 @@ class SpeedUpDisplayBox extends React.Component {
         const {
             speedUps = [],
             type,
-            showEditForm,
             previous,
             next
         } = this.props;

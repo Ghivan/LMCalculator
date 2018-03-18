@@ -77,8 +77,8 @@ class TroopsCalculatorRow extends React.Component {
            return acc;
        }, {});
        Object.values(RESOURCES_TYPE).map(resource => {
-           Object.values(TROOPS_TIERS).map(tier => {
-               total[resource] += troopsCost[tier][resource]*this.state[tier] || 0
+           return Object.values(TROOPS_TIERS).map(tier => {
+               return total[resource] += troopsCost[tier][resource]*this.state[tier] || 0
            })
        });
        return total;

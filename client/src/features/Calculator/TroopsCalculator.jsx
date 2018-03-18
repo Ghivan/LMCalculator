@@ -138,8 +138,8 @@ class TroopsCalculator extends React.Component {
             return acc;
         }, {});
         Object.values(RESOURCES_TYPE).map(resource => {
-            Object.values(TROOPS_CLASSES).map(troopClass => {
-                total[resource] += this.state.resources[troopClass][resource] || 0
+            return Object.values(TROOPS_CLASSES).map(troopClass => {
+                return total[resource] += this.state.resources[troopClass][resource] || 0
             })
         });
         return total;
@@ -153,34 +153,34 @@ class TroopsCalculator extends React.Component {
         const timeWithSpeedBonus = countTimeWithSpeedBonus(initialTime, this.state[FIELD_NAMES.SPEED_BONUS]);
 
         return (
-            <div className="box">
+            <div className="row">
 
-                <div className="columns is-centered">
-                    <div className="column is-half">
-                        <div className="card">
-                            <header className="card-header">
-                                <p className="card-header-title is-centered">
-                                    Бонус скорости тренировки
-                                </p>
-                            </header>
-                            <div className="card-content ">
-                                <div className="content  has-text-centered">
-                                    <CalculatorInputField name={FIELD_NAMES.SPEED_BONUS}
-                                                          defaultValue={this.state[FIELD_NAMES.SPEED_BONUS]}
-                                                          error={this.state.errors[FIELD_NAMES.SPEED_BONUS]}
-                                                          onChange={this.onInputChange}
-                                                          onBlur={this.onInputBlur}
-                                                          icon="fa-fast-forward"
-                                    />
-                                </div>
+                <div className="col-12">
+                    <div className="h3">Калькулятор войск (тренировка)</div>
+                </div>
+
+                <div className="col-12">
+                    <div className="row p-2">
+                        <div className="card m-auto">
+                            <div className="card-header text-center">
+                                Бонус скорости тренировки
+                            </div>
+                            <div className="card-body">
+                                <CalculatorInputField name={FIELD_NAMES.SPEED_BONUS}
+                                                      defaultValue={this.state[FIELD_NAMES.SPEED_BONUS]}
+                                                      error={this.state.errors[FIELD_NAMES.SPEED_BONUS]}
+                                                      onChange={this.onInputChange}
+                                                      onBlur={this.onInputBlur}
+                                                      icon="fa-fast-forward"
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="columns">
-                    <div className="column is-centered is-fullwidth">
-                        <table className="table is-striped is-fullwidth">
+                <div className="col-12">
+                    <div className="row">
+                        <table className="table table-hover">
                             <thead>
                             <tr>
                                 <th/>
@@ -223,7 +223,7 @@ class TroopsCalculator extends React.Component {
                             <tfoot>
                             <tr>
                                 <th colSpan="5"
-                                    className="has-text-centered"
+                                    className="text-center border-top border-bottom"
                                 >
                                     Суммарная мощь армии: {
                                     getFormattedNumberOutput(totalMight)
@@ -235,28 +235,26 @@ class TroopsCalculator extends React.Component {
                     </div>
                 </div>
 
-                <div className="columns">
-                    <div className="column is-fullwidth">
-                        <h2 className="is-size-2 has-text-centered">Расчетное время</h2>
-
-                        <div className="columns is-multiline is-centered">
-                            <div className="column is-half-desktop is-12-tablet">
-                                <TimeDisplay title='Исходное время:'
-                                             seconds={initialTime}
-                                             color="info"
-                                />
-                            </div>
-                            <div className="column is-half-desktop is-12-tablet">
-                                <TimeDisplay title='Фактическое время:'
-                                             seconds={timeWithSpeedBonus}
-                                             color="success"
-                                />
-                            </div>
-                            <div className="column is-narrow">
-                                <ResourcesDisplayBox resources={totalResources}/>
-                            </div>
+                <div className="col-12">
+                    <div className="row">
+                        <div className="col-12 h4">Рассчетное время</div>
+                        <div className="col-sm-12 col-md-6 mb-2">
+                            <TimeDisplay title='Исходное время:'
+                                         seconds={initialTime}
+                                         color="info"
+                            />
+                        </div>
+                        <div className="col-sm-12 col-md-6 mb-2">
+                            <TimeDisplay title='Фактическое время:'
+                                         seconds={timeWithSpeedBonus}
+                                         color="success"
+                            />
                         </div>
                     </div>
+                </div>
+
+                <div className="col-12">
+                        <ResourcesDisplayBox resources={totalResources}/>
                 </div>
 
             </div>

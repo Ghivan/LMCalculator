@@ -20,16 +20,15 @@ class Dropdown extends React.Component {
                 <div className="dropdown-menu" aria-labelledby="dropdownBagScreen">
                     {items.map((item, index) => {
                         return (
-                            <a href="#"
-                               className="dropdown-item"
-                               key={index}
-                               onClick={e => {
-                                   e.preventDefault();
-                                   onItemClick(item.type)
-                               }}
+                            <button className="dropdown-item"
+                                    key={index}
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        onItemClick(item.type)
+                                    }}
                             >
                                 {item.label}
-                            </a>
+                            </button>
                         )
                     })}
                 </div>

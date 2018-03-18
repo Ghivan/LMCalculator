@@ -36,7 +36,6 @@ class CalculatorInputField extends React.Component {
             label = '',
             icon = 'fa-clock'
         } = this.props;
-        const is_narrow = window.innerWidth <= 768;
 
         return (
             <div className={`input-group input-group-sm ${error || this.state.isChanged ? 'mb-1' : 'mb-3'}`}>

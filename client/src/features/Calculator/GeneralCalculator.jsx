@@ -102,6 +102,9 @@ class GeneralCalculator extends React.Component {
         const timeWithHelp = countTimeWithHelp(timeWithSpeedBonus, this.state[FIELD_NAMES.HELP_QUANTITY]);
         return (
             <div className="row">
+                <div className="col-12">
+                    <div className="h3">Общий калькулятор</div>
+                </div>
                 <TimeForm seconds={this.state.seconds}
                           onTimeChange={this.setSeconds}
                 />
@@ -144,6 +147,7 @@ class GeneralCalculator extends React.Component {
                 </div>
                 <div className="col-12 mb-2">
                     <div className="row p-2">
+                        <div className="col-12 h4">Рассчетное время</div>
                         <div className="col-sm-12 col-md-6 mb-2">
                             <TimeDisplay title='Фактическое время:'
                                          seconds={timeWithSpeedBonus}
