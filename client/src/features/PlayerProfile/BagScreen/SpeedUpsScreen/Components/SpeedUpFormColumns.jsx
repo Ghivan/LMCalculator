@@ -2,7 +2,6 @@ import React from 'react';
 
 import InputField from "../../../../Global/Components/InputField/InputField";
 import {SPEED_UPS_TIME_TYPES} from "../../../../Global/Constants/speedups";
-import SpeedUpDisplayBox from "./SpeedUpDisplayBox";
 import PropTypes from "prop-types";
 
 const SpeedUpFormColumns = ({

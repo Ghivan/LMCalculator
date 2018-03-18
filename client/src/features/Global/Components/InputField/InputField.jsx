@@ -8,6 +8,16 @@ class InputField extends React.Component {
         initialValue: String(this.props.defaultValue) || 0
     };
 
+    componentWillReceiveProps(nextProps){
+        if(nextProps.shouldReset){
+            this.setState({
+                isChanged: false,
+                inputValue: nextProps.defaultValue || 0,
+                initialValue: nextProps.defaultValue || 0
+            });
+        }
+    };
+
     onInputChange = e => {
         this.setState({
             inputValue: e.target.value,
@@ -30,15 +40,6 @@ class InputField extends React.Component {
 
         if (this.props.onFocus) this.props.onFocus(e.target);
     };
-
-    componentWillReceiveProps(nextProps){
-        if(nextProps.shouldReset){
-            this.setState({
-                isChanged: false,
-                inputValue: nextProps.defaultValue || 0
-            });
-        }
-    }
 
     render() {
         const {
@@ -65,6 +66,18 @@ class InputField extends React.Component {
                        onChange={this.onInputChange}
                        onBlur={this.onInputBlur}
                        onFocus={this.onInputFocus}
+                       onKeyPress={e => {
+                           if (e.which === 13){
+                               if (error) return;
+                               const inputs = document.getElementsByTagName('input');
+                               const currentInputIndex = Array.prototype.findIndex.call(inputs, input => document.activeElement.name === input.name);
+                               if (currentInputIndex !== -1 && inputs[currentInputIndex + 1]) {
+                                   inputs[currentInputIndex + 1].focus();
+                               } else {
+                                   document.activeElement.blur();
+                               }
+                           }
+                       }}
                 />
                 <div className="invalid-feedback">
                     {error}

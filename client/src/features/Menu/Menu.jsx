@@ -52,14 +52,13 @@ class Menu extends React.Component {
                             }
                         </ul>
                         <span className="navbar-text">
-                            <a className="nav-link text-danger"
-                               href="#"
-                               onClick={e => {
-                                   e.preventDefault();
-                                   logout();
-                               }}>
-                                Выйти из профиля <span className="fa fa-times-circle"/>
-                            </a>
+                            <button className="nav-link btn btn-sm btn-danger"
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        logout();
+                                    }}>
+                                Выйти из профиля
+                            </button>
                     </span>
                     </div>
                 </nav>

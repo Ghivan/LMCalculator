@@ -35,8 +35,10 @@ export const updateSpeedUps = (speedUps) => ({
 export default {
     login: (credentials) => {
         return (dispatch, getState, api) => {
+            api.loader.setLoader();
             return api.auth.login(credentials)
                 .then(response => {
+                    api.loader.removeLoader();
                     if (response.token) {
                         dispatch(authorize(response.token));
                     } else {
@@ -44,6 +46,7 @@ export default {
                     }
                 })
                 .catch(err => {
+                    api.loader.removeLoader();
                     api.error.setError(err.message);
                     if (err.status === 401) dispatch(logout());
                 })
@@ -52,8 +55,10 @@ export default {
 
     validate: token => {
         return (dispatch, getState, api) => {
+            api.loader.setLoader();
             return api.auth.verify(token)
                 .then(response => {
+                    api.loader.removeLoader();
                     if (response.isValid) {
                         dispatch(authorize(token));
                     } else {
@@ -61,6 +66,7 @@ export default {
                     }
                 })
                 .catch(err => {
+                    api.loader.removeLoader();
                     api.error.setError(err.message);
                     dispatch(logout());
                 })
@@ -69,11 +75,14 @@ export default {
 
     fetchDetails: id => {
         return (dispatch, getState, api) => {
+            api.loader.setLoader();
             return api.players.getDetails(getState().player.token, id)
                 .then(response => {
+                    api.loader.removeLoader();
                     dispatch(fetchDetails(response));
                 })
                 .catch(err => {
+                    api.loader.removeLoader();
                     api.error.setError(err.message);
                     if (err.status === 401) dispatch(logout());
                 })
@@ -88,11 +97,14 @@ export default {
 
     updateStats: stats => {
         return (dispatch, getState, api) => {
+            api.loader.setLoader();
             return api.players.updatePlayersStats(getState().player.token, stats)
                 .then(response => {
+                    api.loader.removeLoader();
                     dispatch(updateStats(response));
                 })
                 .catch(err => {
+                    api.loader.removeLoader();
                     api.error.setError(err.message);
                     if (err.status === 401) dispatch(logout());
                 })
@@ -101,11 +113,14 @@ export default {
 
     updateSpeedUps: (type, speedUps) => {
         return (dispatch, getState, api) => {
+            api.loader.setLoader();
             return api.players.updatePlayersSpeedUps(getState().player.token, type, speedUps)
                 .then(response => {
+                    api.loader.removeLoader();
                     dispatch(updateSpeedUps(response));
                 })
                 .catch(err => {
+                    api.loader.removeLoader();
                     api.error.setError(err.message);
                     if (err.status === 401) dispatch(logout());
                 })

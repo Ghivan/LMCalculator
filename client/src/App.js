@@ -3,6 +3,7 @@ import React from 'react';
 import AppRouter from "./features/Router/AppRouter";
 import FloatError from "./features/Errors/FloatError/FloatError";
 import Modal from "./features/Modal/Modal";
+import Loader from "./features/Loader/Loader";
 
 
 class App extends React.Component {
@@ -24,6 +25,7 @@ class App extends React.Component {
         const {error} = this.props;
         return (
             <div className="container">
+                <Loader display={this.props.isLoading}/>
                 {error ?
                     <Modal>
                         <FloatError message={error}/>

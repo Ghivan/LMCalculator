@@ -11,13 +11,11 @@ const ResourcesDisplayBox = (
 ) => {
 
     return (
-        <div>
-            <article className="message is-warning">
-                <div className="message-header">
-                    <p>{title}</p>
-                </div>
-                <div className="message-body is-centered">
-                    <table className="table is-striped is-fullwidth">
+        <div className="row p-2">
+            <div className="card w-75 m-auto">
+                <div className="card-body">
+                    <h5 className="card-title">{title}</h5>
+                    <table className="table">
                         <thead>
                         <tr>
                             <th>Тип ресурса</th>
@@ -48,7 +46,7 @@ const ResourcesDisplayBox = (
                         </tbody>
                     </table>
                 </div>
-            </article>
+            </div>
         </div>
     )
 };

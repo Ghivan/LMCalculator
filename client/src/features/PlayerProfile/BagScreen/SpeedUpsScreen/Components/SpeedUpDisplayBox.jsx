@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {SPEED_UPS_SOURCE_TYPES, SPEED_UPS_TIME_TYPES} from "../../../../Global/Constants/speedups";
-import {getFormattedTime, getRightWordForm} from "../../../../Global/Functions/general";
+import {getFormattedNumberOutput, getFormattedTime, getRightWordForm} from "../../../../Global/Functions/general";
 import SpeedUpsVitrine from "./SpeedUpsVitrine";
 import SpeedUpForm from "./SpeedUpForm";
 
@@ -19,7 +19,6 @@ class SpeedUpDisplayBox extends React.Component {
         const {
             speedUps = [],
             type,
-            showEditForm,
             previous,
             next
         } = this.props;
@@ -71,7 +70,7 @@ class SpeedUpDisplayBox extends React.Component {
                 </div>
                 <div className="card-footer text-muted">
                     <span>Всего: </span>
-                    <span><b>{formattedTime.days}</b> {getRightWordForm(formattedTime.days).days}</span>
+                    <span><b>{getFormattedNumberOutput(formattedTime.days)}</b> {getRightWordForm(formattedTime.days).days}</span>
                     <span> <b>{formattedTime.hours}</b> {getRightWordForm(formattedTime.hours).hours}</span>
                     <span> <b>{formattedTime.minutes}</b> {getRightWordForm(formattedTime.minutes).minutes}</span>
                     <span> <b>{formattedTime.seconds}</b> {getRightWordForm(formattedTime.seconds).seconds}</span>

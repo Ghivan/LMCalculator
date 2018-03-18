@@ -16,8 +16,17 @@ class SpeedUpsVitrine extends React.Component {
         this.animate()
     }
 
-    animate(){
+    componentWillUnmount(){
         if (this.state.timer) clearTimeout(this.state.timer);
+    }
+
+    animate(){
+        if (this.state.timer) {
+            clearTimeout(this.state.timer);
+            this.setState({
+                animation: ''
+            });
+        }
         this.setState({
             animation: 'animated',
             timer: setTimeout(()=> this.setState({animation: ''}), 400)

@@ -35,14 +35,14 @@ class TroopsCalculatorRow extends React.Component {
     };
 
     onInputBlur = element => {
-        const fieldName = element.name;
+        const fieldName = element.name.split('_')[0];
         if (this.state.errors[fieldName]) {
             element.select();
         }
     };
 
     onInputChange = element => {
-        const tier = element.name;
+        const tier = element.name.split('_')[0];
         const value = Number(element.value);
 
         if (value < 0 || isNaN(value) || (value % 1 !== 0)) {
@@ -77,8 +77,8 @@ class TroopsCalculatorRow extends React.Component {
            return acc;
        }, {});
        Object.values(RESOURCES_TYPE).map(resource => {
-           Object.values(TROOPS_TIERS).map(tier => {
-               total[resource] += troopsCost[tier][resource]*this.state[tier] || 0
+           return Object.values(TROOPS_TIERS).map(tier => {
+               return total[resource] += troopsCost[tier][resource]*this.state[tier] || 0
            })
        });
        return total;
@@ -102,7 +102,7 @@ class TroopsCalculatorRow extends React.Component {
                 </td>
                 <td>
                     <CalculatorInputField icon={icon}
-                                          name={TROOPS_TIERS.T1}
+                                          name={`${TROOPS_TIERS.T1}_${this.state.class}`}
                                           defaultValue={this.state[TROOPS_TIERS.T1]}
                                           error={this.state.errors[TROOPS_TIERS.T1]}
                                           onChange={this.onInputChange}
@@ -111,7 +111,7 @@ class TroopsCalculatorRow extends React.Component {
                 </td>
                 <td>
                     <CalculatorInputField icon={icon}
-                                          name={TROOPS_TIERS.T2}
+                                          name={`${TROOPS_TIERS.T2}_${this.state.class}`}
                                           defaultValue={this.state[TROOPS_TIERS.T2]}
                                           error={this.state.errors[TROOPS_TIERS.T2]}
                                           onChange={this.onInputChange}
@@ -120,7 +120,7 @@ class TroopsCalculatorRow extends React.Component {
                 </td>
                 <td>
                     <CalculatorInputField icon={icon}
-                                          name={TROOPS_TIERS.T3}
+                                          name={`${TROOPS_TIERS.T3}_${this.state.class}`}
                                           defaultValue={this.state[TROOPS_TIERS.T3]}
                                           error={this.state.errors[TROOPS_TIERS.T3]}
                                           onChange={this.onInputChange}
@@ -129,7 +129,7 @@ class TroopsCalculatorRow extends React.Component {
                 </td>
                 <td>
                     <CalculatorInputField icon={icon}
-                                          name={TROOPS_TIERS.T4}
+                                          name={`${TROOPS_TIERS.T4}_${this.state.class}`}
                                           defaultValue={this.state[TROOPS_TIERS.T4]}
                                           error={this.state.errors[TROOPS_TIERS.T4]}
                                           onChange={this.onInputChange}

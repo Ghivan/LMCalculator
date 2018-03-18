@@ -10,12 +10,19 @@ const FIELD_NAMES = {
     SPEED_BONUS: 'speedBonus'
 };
 
+const CALCULATOR_MODES = {
+    RESEARCH: 'research',
+    BUILDING: 'building'
+};
+
 class GeneralCalculator extends React.Component {
     state = {
         seconds: 0,
-        [FIELD_NAMES.SPEED_BONUS]: 0,
+        [FIELD_NAMES.SPEED_BONUS]: this.props.stats[CALCULATOR_MODES.RESEARCH] || 0,
         [FIELD_NAMES.HELP_QUANTITY]: 30,
-        errors: {}
+        errors: {},
+        mode: CALCULATOR_MODES.RESEARCH,
+        shouldResetInputs: false
     };
 
     setError = (field, message) => {
@@ -25,6 +32,14 @@ class GeneralCalculator extends React.Component {
                 [field]: message
             }
         })
+    };
+
+    setMode = mode => {
+        this.setState({
+            [FIELD_NAMES.SPEED_BONUS]: this.props.stats[mode],
+            shouldResetInputs: true,
+            mode
+        }, () => this.setState({shouldResetInputs: false}))
     };
 
     clearError = field => {
@@ -102,10 +117,32 @@ class GeneralCalculator extends React.Component {
         const timeWithHelp = countTimeWithHelp(timeWithSpeedBonus, this.state[FIELD_NAMES.HELP_QUANTITY]);
         return (
             <div className="row">
-                <TimeForm seconds={this.state.seconds}
-                          onTimeChange={this.setSeconds}
-                />
                 <div className="col-12">
+                    <div className="h3">Общий калькулятор</div>
+                </div>
+                <div className="col-12">
+                    <div className="form-check form-check-inline">
+                        <label className="form-check-label"><b>Режим:</b></label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                        <input className="form-check-input" type="radio" name="CalculatorMode" id={CALCULATOR_MODES.RESEARCH}
+                               value={CALCULATOR_MODES.RESEARCH} onClick={e => this.setMode(e.target.value)}
+                               defaultChecked={this.state.mode === CALCULATOR_MODES.RESEARCH}
+                        />
+                        <label className="form-check-label" htmlFor={CALCULATOR_MODES.RESEARCH}>Исследование</label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                        <input className="form-check-input" type="radio" name="CalculatorMode" id={CALCULATOR_MODES.BUILDING}
+                               value={CALCULATOR_MODES.BUILDING} onClick={e => this.setMode(e.target.value)}
+                               checked={this.state.mode === CALCULATOR_MODES.BUILDING}
+                        />
+                        <label className="form-check-label" htmlFor={CALCULATOR_MODES.BUILDING}>Строительство</label>
+                    </div>
+                </div>
+                <div className="col-12">
+                    <div className="row p-2">
+                        <div className="h4 w-100">Модификаторы</div>
+                    </div>
                     <div className="row p-2">
                         <div className="col-sm-12 col-md-6 mb-2">
                             <div className="card m-auto">
@@ -116,9 +153,11 @@ class GeneralCalculator extends React.Component {
                                     <CalculatorInputField name={FIELD_NAMES.SPEED_BONUS}
                                                           defaultValue={this.state[FIELD_NAMES.SPEED_BONUS]}
                                                           error={this.state.errors[FIELD_NAMES.SPEED_BONUS]}
+                                                          shouldReset={this.state.shouldResetInputs}
                                                           onChange={this.onInputChange}
                                                           onBlur={this.onInputBlur}
                                                           icon="fa-fast-forward"
+                                                          showResetBtn={true}
                                     />
                                 </div>
                             </div>
@@ -142,8 +181,14 @@ class GeneralCalculator extends React.Component {
                         </div>
                     </div>
                 </div>
+
+                <TimeForm seconds={this.state.seconds}
+                          onTimeChange={this.setSeconds}
+                />
+
                 <div className="col-12 mb-2">
                     <div className="row p-2">
+                        <div className="col-12 h4">Рассчетное время</div>
                         <div className="col-sm-12 col-md-6 mb-2">
                             <TimeDisplay title='Фактическое время:'
                                          seconds={timeWithSpeedBonus}

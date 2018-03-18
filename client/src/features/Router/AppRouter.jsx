@@ -19,7 +19,7 @@ const renderAuthorizedRoutes = (player) => {
             <Route path="/calculator" render={({location}) => {
                 switch (location.pathname) {
                     case '/calculator/general':
-                        return <GeneralCalculator/>;
+                        return <GeneralCalculator stats={stats}/>;
                     case '/calculator/training':
                         return <TroopsCalculator speedBonus={stats ? stats.training : null}/>;
                     default:

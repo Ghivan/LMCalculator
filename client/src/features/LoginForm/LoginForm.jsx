@@ -66,7 +66,7 @@ class LoginForm extends React.Component {
     render() {
         return (
             <form className="form-signin">
-                <img src="img/Icon.png" className="mb-4"/>
+                <img src="img/Icon.png" className="mb-4" alt="Lords Mobile game icon"/>
                 <h1>LM Calculator</h1>
                 <div className="input-group">
                     <InputField name={InputNames.NICKNAME}
