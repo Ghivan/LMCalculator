@@ -65,6 +65,18 @@ class InputField extends React.Component {
                        onChange={this.onInputChange}
                        onBlur={this.onInputBlur}
                        onFocus={this.onInputFocus}
+                       onKeyPress={e => {
+                           if (e.which === 13){
+                               if (error) return;
+                               const inputs = document.getElementsByTagName('input');
+                               const currentInputIndex = Array.prototype.findIndex.call(inputs, input => document.activeElement.name === input.name);
+                               if (inputs[currentInputIndex + 1]) {
+                                   inputs[currentInputIndex + 1].focus();
+                               } else {
+                                   document.activeElement.blur();
+                               }
+                           }
+                       }}
                 />
                 <div className="invalid-feedback">
                     {error}
