@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {countTimeWithHelp, countTimeWithSpeedBonus} from "../Global/Functions/time";
 import TimeForm from "../Global/Components/Time/TimeForm";
 import CalculatorInputField from "../Global/Components/Calculator/CalculatorInputField";
 import TimeDisplay from "../Global/Components/Time/TimeDisplay";
+import {SPEED_UPS_TIME_TYPES} from "../Global/Constants/speedups";
 
 const FIELD_NAMES = {
     HELP_QUANTITY: 'helpQuantity',
@@ -115,6 +117,15 @@ class GeneralCalculator extends React.Component {
     render() {
         const timeWithSpeedBonus = countTimeWithSpeedBonus(this.state.seconds, this.state[FIELD_NAMES.SPEED_BONUS]);
         const timeWithHelp = countTimeWithHelp(timeWithSpeedBonus, this.state[FIELD_NAMES.HELP_QUANTITY]);
+
+        const researchSpeedUpTime = this.props.speedUps['research'] ? this.props.speedUps['research'].reduce((prev, curr) => {
+            return prev + curr.quantity * SPEED_UPS_TIME_TYPES[curr.name].seconds
+        }, 0) : 0;
+
+        const universalSpeedUpTime = this.props.speedUps['universal'] ? this.props.speedUps['universal'].reduce((prev, curr) => {
+            return prev + curr.quantity * SPEED_UPS_TIME_TYPES[curr.name].seconds
+        }, 0) : 0;
+
         return (
             <div className="row">
                 <div className="col-12">
@@ -125,14 +136,16 @@ class GeneralCalculator extends React.Component {
                         <label className="form-check-label"><b>Режим:</b></label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="CalculatorMode" id={CALCULATOR_MODES.RESEARCH}
+                        <input className="form-check-input" type="radio" name="CalculatorMode"
+                               id={CALCULATOR_MODES.RESEARCH}
                                value={CALCULATOR_MODES.RESEARCH} onClick={e => this.setMode(e.target.value)}
                                defaultChecked={this.state.mode === CALCULATOR_MODES.RESEARCH}
                         />
                         <label className="form-check-label" htmlFor={CALCULATOR_MODES.RESEARCH}>Исследование</label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="CalculatorMode" id={CALCULATOR_MODES.BUILDING}
+                        <input className="form-check-input" type="radio" name="CalculatorMode"
+                               id={CALCULATOR_MODES.BUILDING}
                                value={CALCULATOR_MODES.BUILDING} onClick={e => this.setMode(e.target.value)}
                                checked={this.state.mode === CALCULATOR_MODES.BUILDING}
                         />
@@ -203,9 +216,26 @@ class GeneralCalculator extends React.Component {
                         </div>
                     </div>
                 </div>
+
+                <div className="col-12 mb-2">
+                    <div className="row p-2">
+                        <div className="col-12 h4">Содержимое рюкзака</div>
+                        <div className="col-12 mb-2 m-auto">
+                            <TimeDisplay title={`Ускорений в рюкзаке ${this.state.mode === CALCULATOR_MODES.RESEARCH ? '(суммарное исследований и универсальных)' : ''}`}
+                                         seconds={this.state.mode === CALCULATOR_MODES.RESEARCH ? universalSpeedUpTime + researchSpeedUpTime : universalSpeedUpTime}
+                                         color="warning"
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
+}
+
+GeneralCalculator.propTypes = {
+    stats: PropTypes.object,
+    speedUps: PropTypes.object
 }
 
 export default GeneralCalculator;

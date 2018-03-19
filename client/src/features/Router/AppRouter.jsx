@@ -10,7 +10,7 @@ import LoginForm from "../LoginForm/ConnectedLoginForm";
 import Menu from "../Menu/Menu";
 
 const renderAuthorizedRoutes = (player) => {
-    const {stats} = player.details;
+    const {stats, bag} = player.details;
     return (
         <Switch>
             <Route exact path="/profile"
@@ -19,7 +19,7 @@ const renderAuthorizedRoutes = (player) => {
             <Route path="/calculator" render={({location}) => {
                 switch (location.pathname) {
                     case '/calculator/general':
-                        return <GeneralCalculator stats={stats}/>;
+                        return <GeneralCalculator stats={stats} speedUps={bag.speedUps}/>;
                     case '/calculator/training':
                         return <TroopsCalculator speedBonus={stats ? stats.training : null}/>;
                     default:
