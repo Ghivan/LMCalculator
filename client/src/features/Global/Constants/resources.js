@@ -18,6 +18,7 @@ export const RESOURCES_PACKS = [
     {multiplier: 12000, label: '12k'},
     {multiplier: 15000, label: '15k'},
     {multiplier: 20000, label: '20k'},
+    {multiplier: 25000, label: '25k'},
     {multiplier: 30000, label: '30k'},
     {multiplier: 35000, label: '35k'},
     {multiplier: 50000, label: '50k'},
@@ -32,5 +33,5 @@ export const RESOURCES_PACKS = [
     {multiplier: 6000000, label: '6M'},
     {multiplier: 15000000, label: '15M'},
     {multiplier: 20000000, label: '20M'},
-    {multiplier: 60000000, label: '60M'},
+    {multiplier: 60000000, label: '60M'}
 ];
