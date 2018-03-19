@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import {RESOURCES_TYPE} from "../../Constants/resources";
 import {getFormattedNumberOutput} from "../../Functions/general";
-import {countTotalResources} from "../../Functions/resources";
 
-const ResourcesDisplayBox = (
+const TroopsCalculatorResourceBox = (
     {
         resources,
         title = 'Ресурсы'
@@ -25,14 +23,26 @@ const ResourcesDisplayBox = (
                         </tr>
                         </thead>
                         <tbody>
-                        {Object.keys(RESOURCES_TYPE).map((type, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{RESOURCES_TYPE[type]}</td>
-                                    <td>{getFormattedNumberOutput(countTotalResources(resources[type]))}</td>
-                                </tr>
-                            )
-                        })}
+                        <tr>
+                            <td>Еда:</td>
+                            <td>{getFormattedNumberOutput(resources[RESOURCES_TYPE.FOOD])}</td>
+                        </tr>
+                        <tr>
+                            <td>Дерево:</td>
+                            <td>{getFormattedNumberOutput(resources[RESOURCES_TYPE.TIMBER])}</td>
+                        </tr>
+                        <tr>
+                            <td>Камень:</td>
+                            <td>{getFormattedNumberOutput(resources[RESOURCES_TYPE.STONE])}</td>
+                        </tr>
+                        <tr>
+                            <td>Руда:</td>
+                            <td>{getFormattedNumberOutput(resources[RESOURCES_TYPE.ORE])}</td>
+                        </tr>
+                        <tr>
+                            <td>Золото:</td>
+                            <td>{getFormattedNumberOutput(resources[RESOURCES_TYPE.GOLD])}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -41,7 +51,7 @@ const ResourcesDisplayBox = (
     )
 };
 
-ResourcesDisplayBox.propTypes = {
+TroopsCalculatorResourceBox.propTypes = {
     title: PropTypes.string,
     resources: PropTypes.shape({
         [RESOURCES_TYPE.FOOD]: PropTypes.number,
@@ -52,4 +62,4 @@ ResourcesDisplayBox.propTypes = {
     })
 };
 
-export default ResourcesDisplayBox;
+export default TroopsCalculatorResourceBox;

@@ -9,7 +9,7 @@ import {RESOURCES_TYPE} from "../Global/Constants/resources";
 import CalculatorInputField from "../Global/Components/Calculator/CalculatorInputField";
 import TimeDisplay from "../Global/Components/Time/TimeDisplay";
 import TroopsCalculatorRow from "../Global/Components/Calculator/TroopsCalculatorRow";
-import ResourcesDisplayBox from "../Global/Components/Resources/ResourcesDisplayBox";
+import ResourcesDisplayBox from "../Global/Components/Calculator/TroopsCalculatorResourceBox";
 
 const FIELD_NAMES = {
     SPEED_BONUS: 'speedBonus',
@@ -167,6 +167,7 @@ class TroopsCalculator extends React.Component {
                                           onBlur={this.onInputBlur}
                                           icon="fa-fast-forward"
                                           prependText="Бонус скорости тренировки:"
+                                          showResetBtn={true}
                     />
                 </div>
 

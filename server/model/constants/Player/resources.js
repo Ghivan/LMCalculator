@@ -1,4 +1,4 @@
-export const RESOURCES_TYPE = {
+const RESOURCES_TYPE = {
     FOOD: 'Еда',
     TIMBER: 'Дерево',
     STONE: 'Камень',
@@ -6,7 +6,7 @@ export const RESOURCES_TYPE = {
     GOLD: 'Золото'
 };
 
-export const RESOURCES_PACKS = [
+const RESOURCES_PACKS = [
     {multiplier: 1500, label: '1.5k'},
     {multiplier: 3000, label: '3k'},
     {multiplier: 4000, label: '4k'},
@@ -34,3 +34,8 @@ export const RESOURCES_PACKS = [
     {multiplier: 20000000, label: '20M'},
     {multiplier: 60000000, label: '60M'},
 ];
+
+module.exports = {
+    RESOURCES_PACKS,
+    RESOURCES_TYPE
+};

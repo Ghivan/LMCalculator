@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 
 class InputField extends React.Component {
     state = {
-        inputValue: String(this.props.defaultValue) || 0,
+        inputValue: this.props.defaultValue || '',
         isChanged: false,
-        initialValue: String(this.props.defaultValue) || 0
+        initialValue: this.props.defaultValue || ''
     };
 
     componentWillReceiveProps(nextProps){
         if(nextProps.shouldReset){
             this.setState({
                 isChanged: false,
-                inputValue: nextProps.defaultValue || 0,
-                initialValue: nextProps.defaultValue || 0
+                inputValue: nextProps.defaultValue || '',
+                initialValue: nextProps.defaultValue || ''
             });
         }
     };
@@ -51,7 +51,7 @@ class InputField extends React.Component {
         } = this.props;
 
         return (
-            <div className={`input-group input-group-sm ${error || this.state.isChanged ? 'mb-1' : 'mb-3'}`}>
+            <div className={`input-group input-group-sm ${error || this.state.isChanged ? 'mb-0' : 'mb-4'}`}>
                 {label
                     ? <label className="label">{label}</label>
                     : null

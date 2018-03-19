@@ -27,6 +27,12 @@ const PlayersAPI = {
             'Authorization': token
         })
     },
+
+    updatePlayersResources: (token, type, packs) => {
+        return makeRequestWithBody(`${PLAYERS_API_URL}/bag/resources`, 'PUT', {type, packs}, {
+            'Authorization': token
+        })
+    },
 };
 
 export default PlayersAPI;

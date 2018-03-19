@@ -1,4 +1,19 @@
 @import "../../node_modules/bootstrap/scss/bootstrap";
+html {
+  font-size: .8rem;
+}
+
+@include media-breakpoint-up(sm) {
+  html {
+    font-size: .9rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  html {
+    font-size: 1rem;
+  }
+}
 
 .centered {
   display: flex;

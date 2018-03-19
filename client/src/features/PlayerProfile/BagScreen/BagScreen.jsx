@@ -5,6 +5,7 @@ import SpeedUpsScreen from "./SpeedUpsScreen/SpeedUpsScreen";
 import Dropdown from "./DropDown/Dropdown";
 
 import {BAG_SCREENS} from "./constants/screens";
+import ResourceScreen from "./ResourceScreen/ResourceScreen";
 
 class BagScreen extends React.Component {
     state = {
@@ -26,9 +27,17 @@ class BagScreen extends React.Component {
                     />
                 );
             case BAG_SCREENS.RESOURCES.type:
-                return <div>Ресурсы</div>;
+                return (
+                    <ResourceScreen resources={this.props.resources}
+                                    updateResources={this.props.updateResources}
+                    />
+                );
             default:
-                return <SpeedUpsScreen speedUps={this.props.speedUps}/>
+                return (
+                    <SpeedUpsScreen speedUps={this.props.speedUps}
+                                    updateSpeedUps={this.props.updateSpeedUps}
+                    />
+                )
         }
     };
 
@@ -58,7 +67,9 @@ class BagScreen extends React.Component {
 
 BagScreen.propTypes = {
     speedUps: PropTypes.object.isRequired,
-    updateSpeedUps: PropTypes.func.isRequired
+    resources: PropTypes.object.isRequired,
+    updateSpeedUps: PropTypes.func.isRequired,
+    updateResources: PropTypes.func.isRequired
 };
 
 export default BagScreen

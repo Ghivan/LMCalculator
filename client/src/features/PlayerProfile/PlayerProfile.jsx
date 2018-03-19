@@ -25,6 +25,8 @@ class PlayerProfile extends React.Component {
                 return (
                     <BagScreen speedUps={this.props.player.details.bag.speedUps || {}}
                                updateSpeedUps={this.props.updateSpeedUps}
+                               updateResources={this.props.updateResources}
+                               resources={this.props.player.details.bag.resources || {}}
                     />
                 );
             case PlayerProfileScreens.SETTINGS:
@@ -82,6 +84,7 @@ class PlayerProfile extends React.Component {
 PlayerProfile.propTypes = {
     updateSpeedUps: PropTypes.func,
     updateStats: PropTypes.func,
+    updateResources: PropTypes.func,
     player: PropTypes.shape({
         id: PropTypes.string,
         details: PropTypes.shape({

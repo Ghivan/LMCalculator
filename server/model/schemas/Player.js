@@ -47,7 +47,8 @@ const PlayerSchema = mongoose.Schema(
         },
         bag: {
             speedUps: {
-                type: Object
+                type: Object,
+                default: {}
             },
             resources: {
                 type: Object,
@@ -63,7 +64,8 @@ const PlayerSchema = mongoose.Schema(
         timestamps: {
             createdAt: 'joined',
             updatedAt: 'last_changed'
-        }
+        },
+        minimize: false
     }
 );
 

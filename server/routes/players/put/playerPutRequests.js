@@ -2,6 +2,7 @@ const express = require('express');
 
 const {PlayerModel} = require('../../../model/database');
 const {SPEED_UPS_TIME_TYPES, SPEED_UPS_SOURCE_TYPES} = require('../../../model/constants/Player').SPEED_UPS;
+const {RESOURCES_PACKS, RESOURCES_TYPE} = require('../../../model/constants/Player').RESOURCES;
 
 module.exports = () => {
     const router = express.Router();
@@ -133,6 +134,76 @@ module.exports = () => {
                     };
                     return player.save().then(updatedPlayer => {
                         res.json(updatedPlayer.bag.speedUps)
+                    })
+                }
+            })
+            .catch(err => {
+                res.status(500);
+                res.send({
+                    message: err.message
+                });
+            });
+
+    });
+
+    router.put('/bag/resources', (req, res) => {
+
+        PlayerModel.findById(req.body.loggedInPlayer.id)
+            .then(player => {
+                if (!player) {
+                    res.status(404);
+                    res.send({
+                        message: 'Игрок не найден'
+                    });
+                    res.end();
+                }
+
+
+                const {packs, type} = req.body;
+                let errors = [];
+
+                if (!packs || !type) {
+                    res.status(400);
+                    res.send({
+                        message: 'Данные не переданы!'
+                    });
+                    res.end();
+                }
+
+                if (!Array.isArray(packs)) {
+                    res.status(400);
+                    res.send({
+                        message: 'Resources should be an array!'
+                    });
+                    res.end();
+                }
+
+                packs.map(resource => {
+                    if (RESOURCES_PACKS.findIndex(pack => resource.label === pack.label) === -1){
+                        errors.push(`${resource.label} is not valid resource pack!`);
+                    }
+                    if (typeof resource.quantity !== 'number') {
+                        errors.push('Quantity should be a number!')
+                    }
+                });
+
+                if (!RESOURCES_TYPE[type]) {
+                    errors.push(`${type} is not valid resource type!`);
+                }
+
+                if (errors.length > 0) {
+                    res.status(400);
+                    res.send({
+                        message: errors.join(' ')
+                    });
+                    res.end();
+                } else {
+                    player.bag.resources = {
+                        ...player.bag.resources,
+                        [type]: packs
+                    };
+                    return player.save().then(updatedPlayer => {
+                        res.json(updatedPlayer.bag.resources)
                     })
                 }
             })

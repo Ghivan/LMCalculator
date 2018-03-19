@@ -32,6 +32,13 @@ export const updateSpeedUps = (speedUps) => ({
     }
 });
 
+export const updateResources = (packs) => ({
+    type: ActionTypes.UPDATE_RESOURCES,
+    payload: {
+        packs
+    }
+});
+
 export default {
     login: (credentials) => {
         return (dispatch, getState, api) => {
@@ -118,6 +125,23 @@ export default {
                 .then(response => {
                     api.loader.removeLoader();
                     dispatch(updateSpeedUps(response));
+                })
+                .catch(err => {
+                    api.loader.removeLoader();
+                    api.error.setError(err.message);
+                    if (err.status === 401) dispatch(logout());
+                })
+        };
+    },
+
+    updateResources: (type, packs) => {
+        return (dispatch, getState, api) => {
+            api.loader.setLoader();
+            return api.players.updatePlayersResources(getState().player.token, type, packs)
+                .then(response => {
+                    api.loader.removeLoader();
+                    console.log(response);
+                    dispatch(updateResources(response));
                 })
                 .catch(err => {
                     api.loader.removeLoader();

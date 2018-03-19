@@ -7,7 +7,8 @@ import PlayerProfile from './PlayerProfile';
 
 const ActionCreator = {
     updateStats: PlayerActionCreator.updateStats,
-    updateSpeedUps: PlayerActionCreator.updateSpeedUps
+    updateSpeedUps: PlayerActionCreator.updateSpeedUps,
+    updateResources: PlayerActionCreator.updateResources
 };
 
 const mapStateToProps = state => {

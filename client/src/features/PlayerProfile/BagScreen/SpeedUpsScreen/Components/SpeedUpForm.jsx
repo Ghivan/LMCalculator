@@ -1,8 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import isEqual from 'lodash/isEqual';
+
 import SpeedUpFormColumns from "./SpeedUpFormColumns";
 import Notification from "../../../Notification/Notification";
+import {getFormattedNumberOutput, getFormattedTime, getRightWordForm} from "../../../../Global/Functions/general";
+import {SPEED_UPS_TIME_TYPES} from "../../../../Global/Constants/speedups";
 
 class SpeedUpForm extends React.Component {
     state = {
@@ -126,6 +129,12 @@ class SpeedUpForm extends React.Component {
         const {
             close
         } = this.props;
+        const currentTime = getFormattedTime(this.props.speedUps.reduce((prev, curr) => {
+            return prev + curr.quantity * SPEED_UPS_TIME_TYPES[curr.name].seconds
+        }, 0));
+        const nextTime = getFormattedTime(this.state.speedUps.reduce((prev, curr) => {
+            return prev + curr.quantity * SPEED_UPS_TIME_TYPES[curr.name].seconds
+        }, 0));
         return (
             <div>
                 {this.state.notification.message ?
@@ -143,8 +152,26 @@ class SpeedUpForm extends React.Component {
                                         shouldResetInputs={this.state.shouldResetInputs}
                     />
                 </div>
+
+                <div className="row d-flex justify-content-around">
+                    <div className="alert alert-warning text-center m-2 w-50">
+                        <b>Предыдущее значение:</b><br/>
+                        <span><b>{getFormattedNumberOutput(currentTime.days)}</b> {getRightWordForm(currentTime.days).days}</span>
+                        <span> <b>{currentTime.hours}</b>&nbsp;{getRightWordForm(currentTime.hours).hours}</span>
+                        <span> <b>{currentTime.minutes}</b>&nbsp;{getRightWordForm(currentTime.minutes).minutes}</span>
+                        <span> <b>{currentTime.seconds}</b>&nbsp;{getRightWordForm(currentTime.seconds).seconds}</span>
+                    </div>
+                    <div className="alert alert-info text-center m-2 w-50">
+                        <b>Текущее значение:</b><br/>
+                        <span><b>{getFormattedNumberOutput(nextTime.days)}</b> {getRightWordForm(nextTime.days).days}</span>
+                        <span> <b>{nextTime.hours}</b>&nbsp;{getRightWordForm(nextTime.hours).hours}</span>
+                        <span> <b>{nextTime.minutes}</b>&nbsp;{getRightWordForm(nextTime.minutes).minutes}</span>
+                        <span> <b>{nextTime.seconds}</b>&nbsp;{getRightWordForm(nextTime.seconds).seconds}</span>
+                    </div>
+                </div>
+
                 <div className="row">
-                    <div className="btn btn-group btn-group-sm m-auto">
+                    <div className="btn btn-group btn-group m-auto">
                         <button className="btn btn-danger"
                                 onClick={e => {
                                     e.preventDefault();
@@ -174,15 +201,15 @@ class SpeedUpForm extends React.Component {
                     </div>
                 </div>
             </div>
-        )
+    )
     }
-}
+    }
 
-SpeedUpForm.propTypes = {
-    close: PropTypes.func,
-    speedUps: PropTypes.array,
-    type: PropTypes.string,
-    updateSpeedUps: PropTypes.func.isRequired
-};
+    SpeedUpForm.propTypes = {
+        close: PropTypes.func,
+        speedUps: PropTypes.array,
+        type: PropTypes.string,
+        updateSpeedUps: PropTypes.func.isRequired
+    };
 
-export default SpeedUpForm;
+    export default SpeedUpForm;

@@ -1,4 +1,4 @@
-export const SERVER_URL = 'https://lm-calculator.herokuapp.com';
+export const SERVER_URL = 'http://localhost:3001';
 // 'https://lm-calculator.herokuapp.com'
 export const AUTH_URLS = {
     LOGIN: `${SERVER_URL}/auth/login`,
