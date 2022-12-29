@@ -15,7 +15,7 @@
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.1",
+    "react-scripts": "5.0.1",
     "redux": "^3.7.2",
     "redux-batched-actions": "^0.2.1",
     "redux-thunk": "^2.2.0"
@@ -27,8 +27,8 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "css-loader": "^0.28.10",
+    "css-loader": "^6.7.3",
     "redux-devtools-extension": "^2.13.2",
-    "style-loader": "^0.20.3"
+    "style-loader": "^3.3.1"
   }
 }
